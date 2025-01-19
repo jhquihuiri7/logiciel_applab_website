@@ -295,7 +295,7 @@ const DoraAIAModernFuturistic:FunctionComponent = () => {
           					</div>
         				</div>
       			</div>
-      			
+      			<div className="rounded-sm py-3 sm:mb-0 mb-10 bg-[#262a66] w-[190px] h-[53px] text-center flex flex-col justify-center items-center font-semibold">Empezar ahora</div>
     		</div>);
 };
 
