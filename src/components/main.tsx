@@ -8,7 +8,7 @@ const DoraAIAModernFuturistic:FunctionComponent = () => {
 		<div className="w-full relative bg-white text-left text-base text-[#86858c] font-dm-sans">
 			<Header></Header>
             <Nosotros></Nosotros>
-			<div className='bg-white w-full h-[500px]'>
+			<div className='bg-black w-full h-[500px]'>
 
 			</div>
 			<Footer></Footer>
