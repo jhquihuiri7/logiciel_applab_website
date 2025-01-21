@@ -1,5 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { ShimmerButton } from "@/components/ui/shimmer-button";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFacebook, faInstagram } from '@fortawesome/free-brands-svg-icons';
  
 const Footer:FunctionComponent = () => {
     return (
@@ -9,11 +11,11 @@ const Footer:FunctionComponent = () => {
                     <p>© 2021 - 2025 Logiciel Applab</p>
                 </div>
                 <div className="relative flex flex-row justify-around">
-                  <ShimmerButton className='mx-2' shimmerColor="#000000" background="#ffffff">
-                    <p className='text-black'>X</p>
+                  <ShimmerButton className='mx-1 h-[50px] w-[40px]' shimmerColor="#000000" borderRadius="200px" background="#ffffff">
+                    <FontAwesomeIcon icon={faFacebook} size="xl" style={{ color: "#4267B2" }}/>
                   </ShimmerButton>
-                  <ShimmerButton className='mx-2'>
-                    X
+                  <ShimmerButton className='mx-1 h-[50px] w-[40px]' borderRadius="500px">
+                    <FontAwesomeIcon icon={faInstagram} size="xl"/>
                   </ShimmerButton>
                 </div>
                 <div>
