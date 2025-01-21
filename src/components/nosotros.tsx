@@ -3,8 +3,8 @@ import { ShinyButton } from "@/components/ui/shiny-button";
 
 const Nosotros:FunctionComponent = () => {
     return (
-        <div id="nosotros-component" className="bg-white w-full h-screen text-sm flex sm:flex-row flex-col justify-center items-center">
-            <div className="sm:w-1/2 w-full px-16 flex flex-col justify-center items-center">
+        <div id="nosotros-component" className="bg-white w-full h-fit sm:h-screen text-sm flex sm:flex-row flex-col justify-center items-center">
+            <div className="sm:w-1/2 w-full px-0 sm:px-16 flex flex-col justify-center items-center">
                 <div className="sm:text-[49px] text-[30px] py-3 px-8 leading-[108.16%] font-semibold text-black"style={{fontFamily: 'Outfit',WebkitLineClamp: 3,WebkitBoxOrient: 'vertical',}}>Liderando la nueva era de la transformación digital</div>
             	<div className='w-full flex flex-row flex-wrap py-10 text-black'>
                     <div className='w-1/2 px-10 mb-10'>
@@ -29,8 +29,8 @@ const Nosotros:FunctionComponent = () => {
                     </div>
                 </div>
             </div>
-            <div className="sm:w-1/2 bg-[#f4f4f4] w-full h-full bg-contain flex flex-col justify-center items-center">
-				<img src='/images/nosotros.png' className='h-2/3'></img>
+            <div className="sm:w-1/2 bg-[#f4f4f4] w-full h-full py-5 sm:py-0 bg-contain flex flex-col justify-center items-center">
+				<img src='/images/nosotros.png' className='h-1/3 sm:h-2/3'></img>
                 <ShinyButton className='mt-14 bg-[#000000]'><p className='text-white'>Empezar ahora</p></ShinyButton>
 			</div>
       	</div>
