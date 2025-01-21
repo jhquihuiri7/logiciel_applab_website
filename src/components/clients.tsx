@@ -33,7 +33,7 @@ const ReviewCard = ({
   return (
     <figure
       className={cn(
-        "relative w-[500px] h-[500px] cursor-pointer overflow-hidden rounded-xl border p-4"
+        "relative w-[500px] h-[480px] cursor-pointer overflow-hidden rounded-xl border p-4 bg-[#e44194] bg-[url('/images/background.jpeg')] bg-cover bg-no-repeat bg-top"
       )}
     >
       
@@ -44,7 +44,7 @@ const ReviewCard = ({
 
 const Clients:FunctionComponent = () => {
   return (
-    <div className="relative flex h-[500px] w-full flex-col items-center justify-center overflow-hidden bg-black md:shadow-xl">
+    <div className="relative flex h-[500px] w-full flex-col items-center justify-center overflow-hidden md:shadow-xl">
       <Marquee pauseOnHover className="[--duration:20s]">
         {firstRow.map((review) => (
           <ReviewCard key={review.username} {...review} />

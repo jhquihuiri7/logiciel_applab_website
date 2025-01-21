@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import NavbarComponent from './navbar'
 
+
 const text = `
 Tu socio estratégico en la creación de sitios web personalizados 
 y marketing digital con optimización SEO. 

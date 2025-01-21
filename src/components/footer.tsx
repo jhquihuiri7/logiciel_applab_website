@@ -5,7 +5,7 @@ import { faFacebook, faInstagram } from '@fortawesome/free-brands-svg-icons';
  
 const Footer:FunctionComponent = () => {
     return (
-        <div id="footer" className="relative bg-white w-full px-10 pb-5 pt-10">
+        <div id="footer" className="relative bg-[#f4f4f4] w-full px-10 pb-5 pt-10">
             <div className='w-full flex flex-col-reverse sm:flex-row justify-between items-center sm:items-end'>
                 <div>
                     <p>© 2021 - 2025 Logiciel Applab</p>
