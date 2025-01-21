@@ -1,40 +1,62 @@
 import React, { FunctionComponent } from 'react';
+import { cn } from "@/lib/utils";
+import { Marquee } from "@/components/ui/marquee";
 
-const Card = () => {
-    return (
-      <div className="card bg-base-100 w-[40%] shadow-xl">
-        <figure>
-          <img
-            src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-            alt="Shoes"
-          />
-        </figure>
-        <div className="card-body">
-          <h2 className="card-title">
-            Shoes!
-            <div className="badge badge-secondary">NEW</div>
-          </h2>
-          <p>If a dog chews shoes whose shoes does he choose?</p>
-          <div className="card-actions justify-end">
-            <div className="badge badge-outline">Fashion</div>
-            <div className="badge badge-outline">Products</div>
-          </div>
-        </div>
-      </div>
-    );
-  };
+const reviews = [
+  {
+    name: "Jane",
+    username: "@jane",
+    body: "I'm at a loss for words. This is amazing. I love it.",
+    img: "https://avatar.vercel.sh/jane",
+  },
+  {
+    name: "Jenny",
+    username: "@jenny",
+    body: "I'm at a loss for words. This is amazing. I love it.",
+    img: "https://avatar.vercel.sh/jenny",
+  },
+  {
+    name: "James",
+    username: "@james",
+    body: "I'm at a loss for words. This is amazing. I love it.",
+    img: "https://avatar.vercel.sh/james",
+  },
+];
 
+const firstRow = reviews.slice(0, reviews.length / 2);
+
+const ReviewCard = ({
+  body,
+}: {
+  body: string;
+}) => {
+  return (
+    <figure
+      className={cn(
+        "relative w-[500px] h-[500px] cursor-pointer overflow-hidden rounded-xl border p-4"
+      )}
+    >
+      
+      <blockquote className="mt-2 text-sm">{body}</blockquote>
+    </figure>
+  );
+};
 
 const Clients:FunctionComponent = () => {
-    return (
-        <div className='w-full p-10 flex flex-row justify-around'>
-            <Card></Card>
-            <Card></Card>
-        </div>
-
-    );
+  return (
+    <div className="relative flex h-[500px] w-full flex-col items-center justify-center overflow-hidden bg-black md:shadow-xl">
+      <Marquee pauseOnHover className="[--duration:20s]">
+        {firstRow.map((review) => (
+          <ReviewCard key={review.username} {...review} />
+        ))}
+      </Marquee>
+      
+      <div className="pointer-events-none absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-white dark:from-background"></div>
+      <div className="pointer-events-none absolute inset-y-0 right-0 w-1/3 bg-gradient-to-l from-white dark:from-background"></div>
+    </div>
+  );
 }
 
-export default Clients;
 
+export default Clients;
 
