@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-  margin: 0; line-height: normal;
+  margin: 0; line-height: normal; font-family: var(--font-lora), serif;
 }
 
 @layer base {
