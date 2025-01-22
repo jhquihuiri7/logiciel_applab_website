@@ -7,7 +7,7 @@ import Clients from './clients'
 
 const DoraAIAModernFuturistic:FunctionComponent = () => {
   	return (
-		<div className="w-full relative bg-white text-left text-base text-[#86858c] font-dm-sans">
+		<div className="w-full relative bg-white text-left text-black">
 			<Header></Header>
             <Nosotros></Nosotros>
 			<Services></Services>

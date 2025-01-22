@@ -27,9 +27,12 @@ const Card = () => {
 
 const Services:FunctionComponent = () => {
     return (
-        <div className='w-full p-10 flex flex-row justify-around'>
+        <div className='w-full p-10 flex flex-col justify-center items-center'>
+          <h3 className='font-bold text-4xl'>Nuestros Servicios</h3>
+          <div className='w-full my-5 flex flex-row justify-around'>
             <Card></Card>
             <Card></Card>
+          </div>
         </div>
 
     );

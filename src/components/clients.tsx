@@ -1,58 +1,58 @@
 import React, { FunctionComponent } from 'react';
-import { cn } from "@/lib/utils";
+import { ShinyButton } from "@/components/ui/shiny-button";
 import { Marquee } from "@/components/ui/marquee";
 
 const reviews = [
   {
-    name: "Jane",
+    name: "Trading 8",
     username: "@jane",
-    body: "I'm at a loss for words. This is amazing. I love it.",
-    img: "https://avatar.vercel.sh/jane",
+    img: "/images/trading8.png",
   },
   {
-    name: "Jenny",
-    username: "@jenny",
-    body: "I'm at a loss for words. This is amazing. I love it.",
-    img: "https://avatar.vercel.sh/jenny",
+    name: "Earthquake",
+    username: "Earthquake dashboard",
+    img: "/images/earthquakes.png",
   },
   {
-    name: "James",
+    name: "Trading 8",
     username: "@james",
-    body: "I'm at a loss for words. This is amazing. I love it.",
-    img: "https://avatar.vercel.sh/james",
+    img: "/images/trading8.png",
   },
 ];
 
-const firstRow = reviews.slice(0, reviews.length / 2);
-
 const ReviewCard = ({
-  body,
+  name,
+  img,
 }: {
-  body: string;
+  name: string;
+  img: string;
 }) => {
   return (
-    <figure
-      className={cn(
-        "relative w-[500px] h-[480px] cursor-pointer overflow-hidden rounded-xl border p-4 bg-[#e44194] bg-[url('/images/background.jpeg')] bg-cover bg-no-repeat bg-top"
-      )}
+    <div
+      style={{ backgroundImage: `url(${img})` }}
+      className="relative w-[700px] cursor-pointer overflow-hidden rounded-xl border"
     >
+      <img src={img} alt={name} className="w-full h-full object-cover" />
       
-      <blockquote className="mt-2 text-sm">{body}</blockquote>
-    </figure>
+      {/* Texto centrado sobre la imagen */}
+      <div className="absolute inset-0 flex items-end justify-center mb-10">
+        <ShinyButton className='bg-slate-50 w-full'>
+          <span className='font-bold'>{name}</span>
+        </ShinyButton>
+      </div>
+    </div>
   );
 };
-
 const Clients:FunctionComponent = () => {
   return (
-    <div className="relative flex h-[500px] w-full flex-col items-center justify-center overflow-hidden md:shadow-xl">
+    <div className="relative flex w-full flex-col items-center justify-center overflow-hidden md:shadow-xl">
+      <h3 className='font-bold text-4xl'>Páginas web diseñadas para crecer sin límites</h3>
+      <span className='text-xl my-5'>¿Buscas inspiración? Descubre esta colección de sitios web creados por usuarios de Logiciel AppLab como tú.</span>
       <Marquee pauseOnHover className="[--duration:20s]">
-        {firstRow.map((review) => (
+        {reviews.map((review) => (
           <ReviewCard key={review.username} {...review} />
         ))}
       </Marquee>
-      
-      <div className="pointer-events-none absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-white dark:from-background"></div>
-      <div className="pointer-events-none absolute inset-y-0 right-0 w-1/3 bg-gradient-to-l from-white dark:from-background"></div>
     </div>
   );
 }

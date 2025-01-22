@@ -20,7 +20,7 @@ const NavbarComponent: React.FC = () => {
             className="h-8"
             alt="LogicielApplab Logo"
           />
-          <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
+          <span className="self-center text-2xl font-semibold whitespace-nowrap text-black dark:text-white">
             Logiciel Applab
           </span>
         </a>
