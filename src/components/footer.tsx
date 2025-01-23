@@ -5,17 +5,17 @@ import { faFacebook, faInstagram } from '@fortawesome/free-brands-svg-icons';
  
 const Footer:FunctionComponent = () => {
     return (
-        <div id="footer" className="relative bg-[#f4f4f4] w-full px-10 pb-5 pt-10">
+        <div id="footer" className="relative bg-[#f4f4f4] w-full px-10 pb-2 pt-10">
             <div className='w-full flex flex-col-reverse sm:flex-row justify-between items-center sm:items-end'>
                 <div>
                     <p>© 2021 - 2025 Logiciel Applab</p>
                 </div>
                 <div className="relative flex flex-row justify-around">
-                  <ShimmerButton className='mx-1 h-[50px] w-[40px]' shimmerColor="#000000" borderRadius="200px" background="#ffffff">
+                  <ShimmerButton className='mx-1 h-[40px] w-[5px]' shimmerColor="#000000" borderRadius="200px" background="#ffffff">
                     <FontAwesomeIcon icon={faFacebook} size="xl" style={{ color: "#4267B2" }}/>
                   </ShimmerButton>
-                  <ShimmerButton className='mx-1 h-[50px] w-[40px]' borderRadius="500px">
-                    <FontAwesomeIcon icon={faInstagram} size="xl"/>
+                  <ShimmerButton className='mx-1 h-[40px] w-[5px]' shimmerColor="#000000" borderRadius="200px" background="#ffffff">
+                    <FontAwesomeIcon icon={faInstagram} size="xl" style={{ color: "#F56040" }}/>
                   </ShimmerButton>
                 </div>
                 <div>

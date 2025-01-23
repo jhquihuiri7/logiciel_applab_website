@@ -30,7 +30,7 @@ const ReviewCard = ({
   return (
     <div
       style={{ backgroundImage: `url(${img})` }}
-      className="relative w-[700px] cursor-pointer overflow-hidden rounded-xl border"
+      className="relative w-full sm:w-[500px] cursor-pointer overflow-hidden rounded-xl border"
     >
       <img src={img} alt={name} className="w-full h-full object-cover" />
       
@@ -45,10 +45,18 @@ const ReviewCard = ({
 };
 const Clients:FunctionComponent = () => {
   return (
-    <div className="relative flex w-full flex-col items-center justify-center overflow-hidden md:shadow-xl">
-      <h3 className='font-bold text-4xl'>Páginas web diseñadas para crecer sin límites</h3>
-      <span className='text-xl my-5'>¿Buscas inspiración? Descubre esta colección de sitios web creados por usuarios de Logiciel AppLab como tú.</span>
-      <Marquee pauseOnHover className="[--duration:20s]">
+    <div  id="clients-component"  className="relative flex w-full h-screen bg-black flex-col items-center justify-center overflow-hidden md:shadow-xl">
+      <div className='px-5 sm:px-10 w-full flex flex-col justify-center items-center'>
+        <h3 className='font-bold text-4xl text-white sm:text-[49px] text-[30px]'>Páginas web diseñadas para crecer sin límites</h3>
+        <span className='text-xl mt-6 text-white'>¿Buscas inspiración?</span>
+        <span className='text-xl mb-6 text-white'>Descubre esta colección de sitios web creados por usuarios de Logiciel AppLab como tú.</span>
+      </div>
+      <Marquee pauseOnHover className="[--duration:20s] hidden sm:flex">
+        {reviews.map((review) => (
+          <ReviewCard key={review.username} {...review} />
+        ))}
+      </Marquee>
+      <Marquee pauseOnHover vertical reverse className="[--duration:20s] flex sm:hidden">
         {reviews.map((review) => (
           <ReviewCard key={review.username} {...review} />
         ))}

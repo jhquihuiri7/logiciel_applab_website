@@ -6,6 +6,7 @@ body {
   margin: 0; line-height: normal; font-family: var(--font-lora), serif;;
 }
 
+
 @layer base {
   :root {
     --background: 0 0% 100%;

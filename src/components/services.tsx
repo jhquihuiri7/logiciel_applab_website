@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 
 const Card = () => {
     return (
-      <div className="card bg-base-100 w-[40%] shadow-xl">
+      <div className="card bg-base-100 w-full sm:w-[40%] mb-4 shadow-xl">
         <figure>
           <img
             src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
@@ -27,9 +27,9 @@ const Card = () => {
 
 const Services:FunctionComponent = () => {
     return (
-        <div className='w-full p-10 flex flex-col justify-center items-center'>
+        <div id="services-component" className='w-full h-screen p-10 flex flex-col justify-center items-center'>
           <h3 className='font-bold text-4xl'>Nuestros Servicios</h3>
-          <div className='w-full my-5 flex flex-row justify-around'>
+          <div className='w-full my-5 flex flex-col sm:flex-row justify-around'>
             <Card></Card>
             <Card></Card>
           </div>

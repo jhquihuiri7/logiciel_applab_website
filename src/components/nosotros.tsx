@@ -13,7 +13,7 @@ const Nosotros:FunctionComponent = () => {
     return (
         <div id="nosotros-component" className="bg-white w-full h-fit sm:h-screen text-sm flex sm:flex-row flex-col justify-center items-center">
             <div className="sm:w-1/2 w-full px-0 sm:px-16 flex flex-col justify-center items-center">
-                <div className="sm:text-[49px] text-[30px] py-3 px-8 leading-[108.16%] font-semibold text-black"style={{fontFamily: 'Outfit',WebkitLineClamp: 3,WebkitBoxOrient: 'vertical',}}>Liderando la nueva era de la transformación digital</div>
+                <div className="sm:text-[49px] text-[30px] py-3 px-8 leading-[108.16%] font-semibold text-black">Liderando la nueva era de la transformación digital</div>
             	<div className='w-full flex flex-row flex-wrap py-10 text-black'>
                     <div className='w-1/2 px-10 mb-10'>
                         <div className='w-full h-[1px] bg-black'></div>
