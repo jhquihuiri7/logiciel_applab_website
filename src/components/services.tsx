@@ -27,7 +27,7 @@ const Card = () => {
 
 const Services:FunctionComponent = () => {
     return (
-        <div id="services-component" className='w-full h-screen p-10 flex flex-col justify-center items-center'>
+        <div id="services-component" className='w-full h-fit s:h-screen p-10 flex flex-col justify-center items-center'>
           <h3 className='font-bold text-4xl'>Nuestros Servicios</h3>
           <div className='w-full my-5 flex flex-col sm:flex-row justify-around'>
             <Card></Card>

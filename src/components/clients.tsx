@@ -45,7 +45,7 @@ const ReviewCard = ({
 };
 const Clients:FunctionComponent = () => {
   return (
-    <div  id="clients-component"  className="relative flex w-full h-screen bg-black flex-col items-center justify-center overflow-hidden md:shadow-xl">
+    <div  id="clients-component"  className="relative flex w-full h-fit sm:h-screen bg-black flex-col items-center justify-center overflow-hidden md:shadow-xl">
       <div className='px-5 sm:px-10 w-full flex flex-col justify-center items-center'>
         <h3 className='font-bold text-4xl text-white sm:text-[49px] text-[30px]'>Páginas web diseñadas para crecer sin límites</h3>
         <span className='text-xl mt-6 text-white'>¿Buscas inspiración?</span>

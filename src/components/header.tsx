@@ -18,7 +18,7 @@ const Header:FunctionComponent = () => {
 					<div className="w-full h-4/5">
             			<div className="w-full h-full ">
 							<div className="w-full sm:px-16 px-8 h-full flex flex-col justify-center text-left text-[#fefdfe]">
-								<div className="sm:w-[500px] w-full sm:mt-0 mt-52 text-[56px] leading-[128.57%] font-semibold font-outfit inline-block line-clamp-2">Transforma tu Futuro Digital con Logiciel AppLab</div>
+								<div className="sm:w-[500px] w-full sm:mt-0 mt-52 text-[45px] sm:text-[56px] leading-[128.57%] font-semibold font-outfit inline-block line-clamp-2">Transforma tu Futuro Digital con Logiciel AppLab</div>
                 				<div className="sm:w-[500px] w-full sm:my-16 py-5 text-[18px] font-medium inline-block overflow-hidden text-ellipsis line-clamp-2">{text}</div>
 							</div>		
             			</div>
