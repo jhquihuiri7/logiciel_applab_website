@@ -13,7 +13,7 @@ mercado global competitivo.
 const Header:FunctionComponent = () => {
     return(
         <div className="bg-[#1d1f2c] w-full h-screen text-[13px] text-[#97979d]">
-        		<div className="w-full h-full text-[13px] bg-[#1d1f2c] bg-[url('/images/background.jpeg')] bg-cover bg-no-repeat bg-top">		
+        		<div className="w-full h-full text-[13px] bg-[#1d1f2c] bg-[url('/images/background.png')] bg-cover bg-no-repeat bg-top">		
 					<NavbarComponent></NavbarComponent>
 					<div className="w-full h-full sm:h-4/5">
             			<div className="w-full h-full ">
