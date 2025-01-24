@@ -4,6 +4,7 @@ import Footer from './footer';
 import Nosotros from './nosotros';
 import Services from './services'
 import Clients from './clients'
+import Chat from './chat';
 
 const DoraAIAModernFuturistic:FunctionComponent = () => {
   	return (
@@ -13,6 +14,7 @@ const DoraAIAModernFuturistic:FunctionComponent = () => {
 			<Services></Services>
 			<Clients></Clients>
 			<Footer></Footer>
+            <Chat></Chat>
     	</div>
 		);
 };
