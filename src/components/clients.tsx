@@ -46,7 +46,7 @@ const ReviewCard = ({
 const Clients:FunctionComponent = () => {
   return (
     <div  id="clients-component"  className="relative flex w-full h-[800px] py-10 sm:py-0 sm:h-screen bg-black flex-col items-center justify-center overflow-hidden md:shadow-xl">
-      <div className='px-5 sm:px-10 w-full flex flex-col justify-center items-center'>
+      <div className='px-5 sm:px-[25%] w-full flex flex-col justify-center items-center'>
         <h3 className='font-bold text-4xl text-white text-center sm:text-[49px] text-[30px]'>Páginas web diseñadas para crecer sin límites</h3>
         <span className='text-xl mt-6 text-white'>¿Buscas inspiración?</span><br></br>
         <span className='text-xl mb-6 text-white'>Descubre esta colección de sitios web creados por usuarios de Logiciel AppLab como tú.</span>

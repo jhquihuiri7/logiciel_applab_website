@@ -18,22 +18,22 @@ const Nosotros:FunctionComponent = () => {
                     <div className='w-1/2 px-10 mb-10'>
                         <div className='w-full h-[1px] bg-black'></div>
                         <h2 className='font-semibols text-[20px] py-5'>Personaliza tu página</h2>
-                        <p>Crea con nosotros una página web personalizada para tu empresa o responde unas preguntas y recibe un diseño gratuito adaptado a tus necesidades.</p>
+                        <p className='text-[#616264]'>Crea con nosotros una página web personalizada para tu empresa o responde unas preguntas y recibe un diseño gratuito adaptado a tus necesidades.</p>
                     </div>
                     <div className='w-1/2 px-10 mb-10'>
                         <div className='w-full h-[1px] bg-black'></div>
                         <h2 className='font-semibols text-[20px] py-5'>Accesibilidad Garantizada</h2>
-                        <p>Integrando herramientas avanzadas de accesibilidad para garantizar una experiencia óptima para todos tus usuarios.</p>
+                        <p className='text-[#616264]'>Integrando herramientas avanzadas de accesibilidad para garantizar una experiencia óptima para todos tus usuarios.</p>
                     </div>
                     <div className='w-1/2 px-10 mb-10'>
                         <div className='w-full h-[1px] bg-black'></div>
                         <h2 className='font-semibols text-[20px] py-5'>Optimiza para móviles</h2>
-                        <p>Asegúrate de que tu página se vea perfecta en dispositivos móviles, y personaliza la versión móvil para una experiencia óptima, adaptada a los visitantes locales e internacionales.</p>
+                        <p className='text-[#616264]'>Asegúrate de que tu página se vea perfecta en dispositivos móviles, y personaliza la versión móvil para una experiencia óptima, adaptada a los visitantes locales e internacionales.</p>
                     </div>
                     <div className='w-1/2 px-10 mb-10'>
                         <div className='w-full h-[1px] bg-black'></div>
                         <h2 className='font-semibols text-[20px] py-5'>Optimiza para SEO</h2>
-                        <p>Potencia tu tráfico orgánico y mejora la visibilidad de tu negocio en las búsquedas con nuestras avanzadas herramientas de SEO, destaca en el competitivo.</p>
+                        <p className='text-[#616264]'>Potencia tu tráfico orgánico y mejora la visibilidad de tu negocio en las búsquedas con nuestras avanzadas herramientas de SEO, destaca en el competitivo.</p>
                     </div>
                 </div>
             </div>
