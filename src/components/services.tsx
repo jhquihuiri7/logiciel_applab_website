@@ -1,4 +1,5 @@
 import React, { FunctionComponent } from 'react';
+import Image from 'next/image';
 
 const Card = ({
   img,
@@ -16,7 +17,7 @@ const Card = ({
     return (
       <div className="card bg-base-100 w-full sm:w-[40%] mb-4 shadow-xl">
         <figure>
-          <img
+          <Image
             src={img}
             alt="Shoes"
           />
