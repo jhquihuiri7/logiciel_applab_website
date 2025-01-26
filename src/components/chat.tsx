@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react';
 
-const url = "https://wa.me/593997613568?text=Quiero%20saber%20m%C3%A1s%20de%20p%C3%A1ginas%20web.";
+const url = "https://wa.me/593997613568?text=Hola%2C%20estoy%20interesado%20en%20desarrollar%20mi%20p%C3%A1gina%20web%20con%20ustedes.%20%C2%BFPueden%20darme%20m%C3%A1s%20informaci%C3%B3n%3F";
 
 const Chat:FunctionComponent = () => {
     return (

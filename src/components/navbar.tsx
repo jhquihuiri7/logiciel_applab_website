@@ -1,109 +1,76 @@
-"use client"
+'use client'
+import React, {useEffect, useState} from 'react'
+import Link from 'next/link';
 
-import React, { useState } from 'react';
-const NavbarComponent: React.FC = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+const navLinks = [
+  {
+      id:"nosotros-component",
+      title:"Nosotros"
+  },
+  {
+      id:"services-component",
+      title:"Servicios"
+  },{
+      id:"clients-component",
+      title:"Clientes"
+  }
+]
 
-  const toggleMenu = () => {
-    setIsMenuOpen((prev) => !prev);
-  };
+const Navbar = () => {
+    const [active, setActive] = useState('')
+    const [toggle, setToggle] = useState(false)
+    return (
+        <nav className={`px-6 sm:px-16 w-full flex justify-center items-center fixed py-1 top-0 z-20 bg-white`}>
+            <div className="w-full flex justify-between items-center max-w-7xl mx-auto">
+                <Link
+                    href="/"
+                    className="flex items-center gap-2"
+                    onClick={()=>{
+                        setActive("");
+                        window.scrollTo(0,0);
+                    }}
+                >
+                    <img src="https://res.cloudinary.com/logicielapplab/image/upload/v1677460943/LogicielApplab/LOGO_NUEVO_LOGICIEL_125_efllcs.png" alt="logo" className="w-10 h-10 object-contain"></img>
+                    <p className="text-black text-lg font-bold cursor-pointer flex">
+                        Logiciel Applab
+                    </p>
+                </Link>
+                <ul className="list-none hidden sm:flex flex-row gap-10">
+                    {navLinks.map((link)=>(
+                        <li key={link.id} className={`text-gray-700 hover:text-blue-700 text-lg hover:font-medium cursor-pointer`}
+                            onClick={()=>{
+                                setActive(link.title)
+                            }
+                            }>
+                            <a href={`#${link.id}`}>{link.title}</a>
+                        </li>
+                    ))}
+                </ul>
+                <div className="sm:hidden flex felx-1 justify-end items-center">
+                    <img
+                        src={toggle?"/close.svg":"/menu.svg"}
+                        alt="menu"
+                        className="w-[20px] h-[20px] object-contain cursor-pointer"
+                        onClick={()=>setToggle(!toggle)}
+                    ></img>
+                </div>
+                <div className={`${!toggle ? "hidden" : "flex"} p-6 bg-white absolute top-20  right-0 mx-4 my-2 min-w-[140px] z-10 rounded-xl`}>
+                    <ul className="list-none flex flex-col justify-end items-start gap-4">
+                        {navLinks.map((link)=>(
+                            <li key={link.id} className={`text-gray-700 hover:text-blue-700 font-poppins font-medium cursor-pointer text-[16px]`}
+                                onClick={()=>{
+                                    setToggle(!toggle)
+                                    setActive(link.title)
+                                }
+                                }>
+                                <a href={`#${link.id}`}>{link.title}</a>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    );
+}
 
-  return (
-    <nav className="bg-white dark:bg-gray-900 fixed w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600">
-      <div className="w-full flex flex-row items-center justify-between px-16 py-4">
-        <a
-          href="https://flowbite.com/"
-          className="flex items-center space-x-3 rtl:space-x-reverse"
-        >
-          <img
-            src="https://res.cloudinary.com/logicielapplab/image/upload/v1677460943/LogicielApplab/LOGO_NUEVO_LOGICIEL_125_efllcs.png"
-            className="h-8"
-            alt="LogicielApplab Logo"
-          />
-          <span className="self-center text-2xl font-semibold whitespace-nowrap text-black dark:text-white">
-            Logiciel Applab
-          </span>
-        </a>
-        <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-          <button
-            data-collapse-toggle="navbar-sticky"
-            type="button"
-            className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-            aria-controls="navbar-sticky"
-            aria-expanded={isMenuOpen}
-            onClick={toggleMenu}
-          >
-            <span className="sr-only">Open main menu</span>
-            {isMenuOpen ? (
-              <svg
-                className="w-5 h-5"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 17 14"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            ) : (
-              <svg
-                className="w-5 h-5"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 17 14"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M1 1h15M1 7h15M1 13h15"
-                />
-              </svg>
-            )}
-          </button>
-        </div>
-        <div
-          className={`items-center justify-between ${
-            isMenuOpen ? "block" : "hidden"
-          } w-full md:flex md:w-auto md:order-1`}
-          id="navbar-sticky"
-        >
-          <ul className="flex flex-col p-4 text-lg md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-            <li>
-              <a
-                href="#nosotros-component"
-                className="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500"
-                aria-current="page"
-              >
-                Nosotros
-              </a>
-            </li>
-            <li>
-              <a
-                href="#services-component"
-                className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
-              >
-                Servicios
-              </a>
-            </li>
-            <li>
-              <a
-                href="#clients-component"
-                className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
-              >
-                Clientes
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-  );
-};
-
-export default NavbarComponent;
+export default Navbar
