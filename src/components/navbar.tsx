@@ -26,13 +26,13 @@ const Navbar = () => {
                     className="flex items-center gap-2"
                 >
                     <img src="https://res.cloudinary.com/logicielapplab/image/upload/v1677460943/LogicielApplab/LOGO_NUEVO_LOGICIEL_125_efllcs.png" alt="logo" className="w-10 h-10 object-contain"/>
-                    <p className="text-black text-xl font-bold cursor-pointer flex">
+                    <p className="text-black text-2xl font-bold cursor-pointer flex">
                         Logiciel Applab
                     </p>
                 </Link>
                 <ul className="list-none hidden sm:flex flex-row gap-10">
                     {navLinks.map((link)=>(
-                        <li key={link.id} className={`text-gray-700 hover:text-blue-700 text-sm hover:font-medium cursor-pointer`}>
+                        <li key={link.id} className={`text-gray-700 hover:text-blue-700 text-base hover:font-medium cursor-pointer`}>
                             <a href={`#${link.id}`}>{link.title}</a>
                         </li>
                     ))}
