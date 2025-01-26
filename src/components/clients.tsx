@@ -1,7 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import { ShinyButton } from "@/components/ui/shiny-button";
 import { Marquee } from "@/components/ui/marquee";
-import Image from "next/image";
 
 const reviews = [
   {
@@ -33,7 +32,7 @@ const ReviewCard = ({
       style={{ backgroundImage: `url(${img})` }}
       className="relative w-full sm:w-[500px] cursor-pointer overflow-hidden rounded-xl border"
     >
-      <Image src={img} alt={name} className="w-full h-full object-cover" />
+      <img src={img} alt={name} className="w-full h-full object-cover" />
       {/* Texto centrado sobre la imagen */}
       <div className="absolute inset-0 flex items-end justify-center mb-10">
         <ShinyButton className='bg-slate-50 w-full'>

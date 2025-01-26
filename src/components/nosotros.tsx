@@ -1,7 +1,6 @@
 "use client"
 import React, { FunctionComponent } from 'react';
 import { ShinyButton } from "@/components/ui/shiny-button";
-import Image from 'next/image';
 
 const handleClick = () => {
     const url = "https://wa.me/593997613568?text=Hola%2C%20estoy%20interesado%20en%20desarrollar%20mi%20p%C3%A1gina%20web%20con%20ustedes.%20%C2%BFPueden%20darme%20m%C3%A1s%20informaci%C3%B3n%3F";
@@ -39,7 +38,7 @@ const Nosotros:FunctionComponent = () => {
                 </div>
             </div>
             <div className="sm:w-1/2 bg-[#f4f4f4] w-full h-full py-5 sm:py-0 bg-contain flex flex-col justify-center items-center">
-				<Image src='/images/nosotros.png' className='h-1/3 sm:h-2/3' alt=''/>
+				<img src='/images/nosotros.png' className='h-1/3 sm:h-2/3' alt=''/>
                 <ShinyButton className='mt-14 bg-[#000000]' onClick={handleClick}><p className='text-white'>Empezar ahora</p></ShinyButton>
 			</div>
       	</div>

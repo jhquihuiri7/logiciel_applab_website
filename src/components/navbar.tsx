@@ -1,7 +1,6 @@
 'use client'
 import React, {useState} from 'react'
 import Link from 'next/link';
-import Image from "next/image";
 
 const navLinks = [
   {
@@ -26,7 +25,7 @@ const Navbar = () => {
                     href="/"
                     className="flex items-center gap-2"
                 >
-                    <Image src="https://res.cloudinary.com/logicielapplab/image/upload/v1677460943/LogicielApplab/LOGO_NUEVO_LOGICIEL_125_efllcs.png" alt="logo" className="w-10 h-10 object-contain"/>
+                    <img src="https://res.cloudinary.com/logicielapplab/image/upload/v1677460943/LogicielApplab/LOGO_NUEVO_LOGICIEL_125_efllcs.png" alt="logo" className="w-10 h-10 object-contain"/>
                     <p className="text-black text-lg font-bold cursor-pointer flex">
                         Logiciel Applab
                     </p>
@@ -39,7 +38,7 @@ const Navbar = () => {
                     ))}
                 </ul>
                 <div className="sm:hidden flex felx-1 justify-end items-center">
-                    <Image
+                    <img
                         src={toggle?"/close.svg":"/menu.svg"}
                         alt="menu"
                         className="w-[20px] h-[20px] object-contain cursor-pointer"
