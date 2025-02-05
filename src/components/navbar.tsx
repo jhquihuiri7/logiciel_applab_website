@@ -1,5 +1,5 @@
-'use client'
-import React, {useState} from 'react'
+"use client"
+import React, {useState, useEffect } from "react";
 import Link from 'next/link';
 
 const navLinks = [
@@ -18,6 +18,19 @@ const navLinks = [
 
 const Navbar = () => {
     const [toggle, setToggle] = useState(false)
+    const [isLandscape, setIsLandscape] = useState<boolean | null>(null);
+        
+      useEffect(() => {
+        if (typeof window !== "undefined") {
+          setIsLandscape(window.innerWidth > window.innerHeight);
+          const handleResize = () => {
+            setIsLandscape(window.innerWidth > window.innerHeight);
+          };
+          window.addEventListener("resize", handleResize);
+          return () => window.removeEventListener("resize", handleResize);
+        }
+      }, []);
+      if (isLandscape === null) return null;
     return (
         <nav className={`px-6 sm:px-16 w-full flex justify-center items-center fixed py-1 top-0 z-20 bg-white`}>
             <div className="w-full flex justify-between items-center max-w-7xl mx-auto">
@@ -30,14 +43,14 @@ const Navbar = () => {
                         Logiciel Applab
                     </p>
                 </Link>
-                <ul className="list-none hidden sm:flex flex-row gap-10">
+                <ul className={`list-none ${isLandscape ? "hidden" : "hidden sm:flex"} flex-row gap-10`}>
                     {navLinks.map((link)=>(
                         <li key={link.id} className={`text-gray-700 hover:text-blue-700 text-base hover:font-medium cursor-pointer`}>
                             <a href={`#${link.id}`}>{link.title}</a>
                         </li>
                     ))}
                 </ul>
-                <div className="sm:hidden flex felx-1 justify-end items-center">
+                <div className={`${isLandscape ? "flex" : "flex sm:hidden"} felx-1 justify-end items-center`}>
                     <img
                         src={toggle?"/close.svg":"/menu.svg"}
                         alt="menu"

@@ -1,4 +1,5 @@
-import React, { FunctionComponent } from 'react';
+"use client"
+import React, { FunctionComponent, useState, useEffect } from "react";
 
 const Card = ({
   img,
@@ -38,8 +39,24 @@ const Card = ({
 
 
 const Services:FunctionComponent = () => {
+  const [isLandscape, setIsLandscape] = useState<boolean | null>(null);
+  
+      useEffect(() => {
+        if (typeof window !== "undefined") {
+          setIsLandscape(window.innerWidth > window.innerHeight);
+  
+          const handleResize = () => {
+            setIsLandscape(window.innerWidth > window.innerHeight);
+          };
+  
+          window.addEventListener("resize", handleResize);
+          return () => window.removeEventListener("resize", handleResize);
+        }
+      }, []);
+  
+      if (isLandscape === null) return null;
     return (
-        <div id="services-component" className='w-full h-fit sm:h-screen p-10 flex flex-col justify-center items-center bg-[#f6f4f5]'>
+        <div id="services-component" className={`w-full ${isLandscape ? "h-fit" : "h-fit sm:h-screen"} p-10 flex flex-col justify-center items-center bg-[#f6f4f5]`}>
           <h3 className='font-bold text-4xl'>Nuestros Servicios</h3>
           <div className='w-full my-5 flex flex-col sm:flex-row justify-around'>
             <Card 

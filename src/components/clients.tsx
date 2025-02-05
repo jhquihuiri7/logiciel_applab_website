@@ -1,4 +1,5 @@
-import React, { FunctionComponent } from 'react';
+"use client"
+import React, { FunctionComponent, useState, useEffect } from "react";
 import { ShinyButton } from "@/components/ui/shiny-button";
 import { Marquee } from "@/components/ui/marquee";
 
@@ -43,8 +44,21 @@ const ReviewCard = ({
   );
 };
 const Clients:FunctionComponent = () => {
+  const [isLandscape, setIsLandscape] = useState<boolean | null>(null);
+    
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setIsLandscape(window.innerWidth > window.innerHeight);
+      const handleResize = () => {
+        setIsLandscape(window.innerWidth > window.innerHeight);
+      };
+      window.addEventListener("resize", handleResize);
+      return () => window.removeEventListener("resize", handleResize);
+    }
+  }, []);
+  if (isLandscape === null) return null;
   return (
-    <div  id="clients-component"  className="relative flex w-full h-[800px] py-10 sm:py-0 sm:h-screen bg-[#292e70] flex-col items-center justify-center overflow-hidden md:shadow-xl">
+    <div  id="clients-component"  className={`relative flex w-full ${isLandscape ? "h-[800px]" : "h-[800px] sm:h-screen"} py-10 sm:py-0 bg-[#292e70] flex-col items-center justify-center overflow-hidden md:shadow-xl`}>
       <div className='px-5 sm:px-[25%] w-full flex flex-col justify-center items-center'>
         <h3 className='font-bold text-4xl text-white text-center sm:text-[49px] text-[30px]'>Páginas web diseñadas para crecer sin límites</h3>
         <span className='text-xl mt-6 text-white'>¿Buscas inspiración?</span><br></br>

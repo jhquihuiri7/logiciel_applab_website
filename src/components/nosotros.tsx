@@ -1,5 +1,5 @@
 "use client"
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useState, useEffect } from "react";
 import { ShinyButton } from "@/components/ui/shiny-button";
 
 const handleClick = () => {
@@ -9,10 +9,26 @@ const handleClick = () => {
   };
 
 const Nosotros:FunctionComponent = () => {
+    const [isLandscape, setIsLandscape] = useState<boolean | null>(null);
+
+    useEffect(() => {
+      if (typeof window !== "undefined") {
+        setIsLandscape(window.innerWidth > window.innerHeight);
+
+        const handleResize = () => {
+          setIsLandscape(window.innerWidth > window.innerHeight);
+        };
+
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+      }
+    }, []);
+
+    if (isLandscape === null) return null;
       
     return (
-        <div id="nosotros-component" className="bg-white w-full h-fit sm:h-screen text-sm flex sm:flex-row flex-col justify-center items-center">
-            <div className="sm:w-1/2 w-full px-0 sm:px-16 flex flex-col justify-center items-center">
+        <div id="nosotros-component" className={`bg-white w-full text-sm flex justify-center items-center ${isLandscape ? "h-fit flex-col" : "h-fit sm:h-screen flex-col sm:flex-row"}`}>
+            <div className={`${isLandscape ? "w-full" : "sm:w-1/2 w-full"} px-0 sm:px-16 flex flex-col justify-center items-center`}>
                 <div className="sm:text-[49px] text-[30px] py-3 px-8 leading-[108.16%] font-semibold text-black">Liderando la nueva era de la transformación digital</div>
             	<div className='w-full flex flex-row flex-wrap py-10 text-black'>
                     <div className='w-1/2 px-10 mb-10'>
