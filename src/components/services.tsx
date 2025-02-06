@@ -40,43 +40,43 @@ const Card = ({
 
 const Services:FunctionComponent = () => {
   const [isLandscape, setIsLandscape] = useState<boolean | null>(null);
-  
-      useEffect(() => {
-        if (typeof window !== "undefined") {
+  const [isMobile, setIsMobile] = useState<boolean>(false); // Nuevo estado para identificar si es móvil
+  useEffect(() => {
+      if (typeof window !== "undefined") {
+          const checkIfMobile = window.innerWidth <= 900; // Definir un límite para dispositivos móviles
+          setIsMobile(checkIfMobile); // Actualizar el estado según el tamaño de la ventana
           setIsLandscape(window.innerWidth > window.innerHeight);
-  
+          
           const handleResize = () => {
-            setIsLandscape(window.innerWidth > window.innerHeight);
+              setIsMobile(window.innerWidth <= 900); // Verificar en cada redimensionado si es móvil
+              setIsLandscape(window.innerWidth > window.innerHeight);
           };
-  
           window.addEventListener("resize", handleResize);
           return () => window.removeEventListener("resize", handleResize);
-        }
-      }, []);
-  
-      if (isLandscape === null) return null;
-    return (
-        <div id="services-component" className={`w-full ${isLandscape ? "h-fit" : "h-fit sm:h-screen"} p-10 flex flex-col justify-center items-center bg-[#f6f4f5]`}>
-          <h3 className='font-bold text-4xl'>Nuestros Servicios</h3>
-          <div className='w-full my-5 flex flex-col sm:flex-row justify-around'>
-            <Card 
-              img="/images/servicios1.jpeg" 
-              title='Diseño web a medida'
-              hashtags={['#PaginasWeb','#TuNegocio']}
-              showNew={false}
-              description='Crea tu propia página con nosotros, con calidad profesional, ideal para promocionar tu negocio, exhibir tus proyectos o lanzar tu tienda online'>
-            </Card>
-            <Card 
-              img='/images/servicios2.jpeg' 
-              title='Optimización para motores de búsqueda'
-              hashtags={['#SEO','#MarketingDigital']}
-              showNew={true}
-              description='Obtén funciones de SEO para aumentar la presencia de tu sitio en los principales resultados de búsqueda'>
-            </Card>
-          </div>
+      }
+  }, []);
+  if (isLandscape === null) return null;
+  return (
+      <div id="services-component" className={`w-full ${(isMobile && isLandscape) ? "h-fit" : "h-fit sm:h-screen"} p-10 flex flex-col justify-center items-center bg-[#f6f4f5]`}>
+        <h3 className='font-bold text-4xl'>Nuestros Servicios</h3>
+        <div className='w-full my-5 flex flex-col sm:flex-row justify-around'>
+          <Card 
+            img="/images/servicios1.jpeg" 
+            title='Diseño web a medida'
+            hashtags={['#PaginasWeb','#TuNegocio']}
+            showNew={false}
+            description='Crea tu propia página con nosotros, con calidad profesional, ideal para promocionar tu negocio, exhibir tus proyectos o lanzar tu tienda online'>
+          </Card>
+          <Card 
+            img='/images/servicios2.jpeg' 
+            title='Optimización para motores de búsqueda'
+            hashtags={['#SEO','#MarketingDigital']}
+            showNew={true}
+            description='Obtén funciones de SEO para aumentar la presencia de tu sitio en los principales resultados de búsqueda'>
+          </Card>
         </div>
-
-    );
+      </div>
+  );
 }
 
 export default Services;
