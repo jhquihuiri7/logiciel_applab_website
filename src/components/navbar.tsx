@@ -10,7 +10,7 @@ const navLinks = [
   {
       id:"services-component",
       title:"Servicios"
-  },{
+  }, {
       id:"clients-component",
       title:"Clientes"
   }
@@ -19,18 +19,27 @@ const navLinks = [
 const Navbar = () => {
     const [toggle, setToggle] = useState(false)
     const [isLandscape, setIsLandscape] = useState<boolean | null>(null);
-        
-      useEffect(() => {
+    const [isMobile, setIsMobile] = useState<boolean>(false); // Nuevo estado para identificar si es móvil
+
+    useEffect(() => {
         if (typeof window !== "undefined") {
-          setIsLandscape(window.innerWidth > window.innerHeight);
-          const handleResize = () => {
+            const checkIfMobile = window.innerWidth <= 900; // Definir un límite para dispositivos móviles
+            setIsMobile(checkIfMobile); // Actualizar el estado según el tamaño de la ventana
+
             setIsLandscape(window.innerWidth > window.innerHeight);
-          };
-          window.addEventListener("resize", handleResize);
-          return () => window.removeEventListener("resize", handleResize);
+            
+            const handleResize = () => {
+                setIsMobile(window.innerWidth <= 900); // Verificar en cada redimensionado si es móvil
+                setIsLandscape(window.innerWidth > window.innerHeight);
+            };
+
+            window.addEventListener("resize", handleResize);
+            return () => window.removeEventListener("resize", handleResize);
         }
-      }, []);
-      if (isLandscape === null) return null;
+    }, []);
+
+    if (isLandscape === null) return null;
+
     return (
         <nav className={`px-6 sm:px-16 w-full flex justify-center items-center fixed py-1 top-0 z-20 bg-white`}>
             <div className="w-full flex justify-between items-center max-w-7xl mx-auto">
@@ -43,14 +52,14 @@ const Navbar = () => {
                         Logiciel Applab
                     </p>
                 </Link>
-                <ul className={`list-none ${isLandscape ? "hidden" : "hidden sm:flex"} flex-row gap-10`}>
-                    {navLinks.map((link)=>(
+                <ul className={`list-none ${(isMobile && isLandscape) ? "hidden" : "hidden sm:flex"} flex-row gap-10`}>
+                    {navLinks.map((link)=>( 
                         <li key={link.id} className={`text-gray-700 hover:text-blue-700 text-base hover:font-medium cursor-pointer`}>
                             <a href={`#${link.id}`}>{link.title}</a>
                         </li>
                     ))}
                 </ul>
-                <div className={`${isLandscape ? "flex" : "flex sm:hidden"} felx-1 justify-end items-center`}>
+                <div className={`${(isMobile && isLandscape) ? "flex" : "flex sm:hidden"} felx-1 justify-end items-center`}>
                     <img
                         src={toggle?"/close.svg":"/menu.svg"}
                         alt="menu"
@@ -60,7 +69,7 @@ const Navbar = () => {
                 </div>
                 <div className={`${!toggle ? "hidden" : "flex"} p-6 bg-white absolute top-20  right-0 mx-4 my-2 min-w-[140px] z-10 rounded-xl`}>
                     <ul className="list-none flex flex-col justify-end items-start gap-4">
-                        {navLinks.map((link)=>(
+                        {navLinks.map((link)=>( 
                             <li key={link.id} className={`text-gray-700 hover:text-blue-700 font-poppins font-medium cursor-pointer text-[16px]`}
                                 onClick={()=>{
                                     setToggle(!toggle)
