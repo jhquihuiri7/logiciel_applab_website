@@ -39,7 +39,7 @@ const Header:FunctionComponent = () => {
 		if (isLandscape === null) return null;
     return(
         <div className="bg-[#1d1f2c] w-full h-screen text-[13px] text-[#97979d]">
-        		<div className="w-full h-full text-[13px] bg-[#1d1f2c] bg-[url('/images/background.png')] bg-cover bg-no-repeat bg-top">		
+        		<div className="w-full h-full text-[13px] bg-[#1d1f2c] bg-[url('https://res.cloudinary.com/logicielapplab/image/upload/v1739147827/LOGICIEL_APPLAB_2025/Header/background-min_lkawxu.webp')] bg-cover bg-no-repeat bg-top">		
 					<NavbarComponent></NavbarComponent>
 					<div className="w-full h-full">
             			<div className="w-full h-full ">

@@ -61,14 +61,14 @@ const Services:FunctionComponent = () => {
         <h3 className='font-bold text-4xl'>Nuestros Servicios</h3>
         <div className='w-full my-5 flex flex-col sm:flex-row justify-around'>
           <Card 
-            img="/images/servicios1.jpeg" 
+            img="https://res.cloudinary.com/logicielapplab/image/upload/v1739147702/LOGICIEL_APPLAB_2025/Services/servicios1-min_ufoqe6.webp" 
             title='Diseño web a medida'
             hashtags={['#PaginasWeb','#TuNegocio']}
             showNew={false}
             description='Crea tu propia página con nosotros, con calidad profesional, ideal para promocionar tu negocio, exhibir tus proyectos o lanzar tu tienda online'>
           </Card>
           <Card 
-            img='/images/servicios2.jpeg' 
+            img='https://res.cloudinary.com/logicielapplab/image/upload/v1739147702/LOGICIEL_APPLAB_2025/Services/servicios2-min_jpqudi.webp' 
             title='Optimización para motores de búsqueda'
             hashtags={['#SEO','#MarketingDigital']}
             showNew={true}

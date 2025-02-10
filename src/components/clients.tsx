@@ -5,19 +5,16 @@ import { Marquee } from "@/components/ui/marquee";
 
 const reviews = [
   {
-    name: "Trading 8",
-    username: "@jane",
-    img: "/images/trading8.png",
+    name: "Portafolio Desarrollador",
+    img: "https://res.cloudinary.com/logicielapplab/image/upload/v1739147811/LOGICIEL_APPLAB_2025/Clientes/nosotros-min_iwongm.webp",
   },
   {
     name: "Earthquake",
-    username: "Earthquake dashboard",
-    img: "/images/earthquakes.png",
+    img: "https://res.cloudinary.com/logicielapplab/image/upload/v1739147810/LOGICIEL_APPLAB_2025/Clientes/earthquakes-min_p1y7em.webp",
   },
   {
     name: "Trading 8",
-    username: "@james",
-    img: "/images/trading8.png",
+    img: "https://res.cloudinary.com/logicielapplab/image/upload/v1739147810/LOGICIEL_APPLAB_2025/Clientes/trading8-min_chfvct.webp",
   },
 ];
 
@@ -70,12 +67,12 @@ const Clients:FunctionComponent = () => {
       </div>
       <Marquee pauseOnHover className="[--duration:20s] hidden sm:flex">
         {reviews.map((review) => (
-          <ReviewCard key={review.username} {...review} />
+          <ReviewCard key={review.name} {...review} />
         ))}
       </Marquee>
       <Marquee pauseOnHover vertical reverse className="[--duration:20s] flex sm:hidden">
         {reviews.map((review) => (
-          <ReviewCard key={review.username} {...review} />
+          <ReviewCard key={review.name} {...review} />
         ))}
       </Marquee>
     </div>
