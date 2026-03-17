@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React, { FunctionComponent } from 'react';
 import { ShimmerButton } from "@/components/ui/shimmer-button";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -19,8 +20,13 @@ const Footer:FunctionComponent = () => {
                   </ShimmerButton>
                 </div>
                 <div>
-                  <img src="https://res.cloudinary.com/logicielapplab/image/upload/v1677460943/LogicielApplab/LOGO_NUEVO_LOGICIEL_125_efllcs.png" className="animate-bounce h-16 mr-3"
-                             alt="Logiciel Applab Logo"/>
+                  <Image
+                    src="https://res.cloudinary.com/logicielapplab/image/upload/v1677460943/LogicielApplab/LOGO_NUEVO_LOGICIEL_125_efllcs.png"
+                    width={64}
+                    height={64}
+                    className="animate-bounce h-16 mr-3"
+                    alt="Logiciel Applab Logo"
+                  />
                 </div>
             </div>
         </div>

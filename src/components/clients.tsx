@@ -1,5 +1,5 @@
-"use client"
 import React, { FunctionComponent, useState, useEffect } from "react";
+import Image from "next/image";
 import { ShinyButton } from "@/components/ui/shiny-button";
 import { Marquee } from "@/components/ui/marquee";
 
@@ -26,12 +26,8 @@ const ReviewCard = ({
   img: string;
 }) => {
   return (
-    <div
-      style={{ backgroundImage: `url(${img})` }}
-      className="relative w-full sm:w-[500px] cursor-pointer overflow-hidden rounded-xl border"
-    >
-      <img src={img} alt={name} className="w-full h-full object-cover" />
-      {/* Texto centrado sobre la imagen */}
+    <div className="relative w-full sm:w-[500px] cursor-pointer overflow-hidden rounded-xl border">
+      <Image src={img} alt={name} width={600} height={400} className="h-full w-full object-cover" />
       <div className="absolute inset-0 flex items-end justify-center mb-10">
         <ShinyButton className='bg-slate-50 w-full'>
           <span className='font-bold'>{name}</span>

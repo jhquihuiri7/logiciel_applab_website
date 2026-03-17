@@ -1,5 +1,5 @@
-"use client"
 import React, { FunctionComponent, useState, useEffect } from "react";
+import Image from "next/image";
 import { ShinyButton } from "@/components/ui/shiny-button";
 
 const handleClick = () => {
@@ -59,7 +59,13 @@ const Nosotros:FunctionComponent = () => {
                 </div>
             </div>
             <div className="sm:w-1/2 bg-[#f4f4f4] w-full h-full py-5 sm:py-0 bg-contain flex flex-col justify-center items-center">
-				<img src='https://res.cloudinary.com/logicielapplab/image/upload/v1739149242/LOGICIEL_APPLAB_2025/Nosotros/nosotros_ajpsl5.webp' className='h-1/3 sm:h-2/3' alt=''/>
+				<Image
+					src="https://res.cloudinary.com/logicielapplab/image/upload/v1739149242/LOGICIEL_APPLAB_2025/Nosotros/nosotros_ajpsl5.webp"
+					width={640}
+					height={640}
+					className="h-1/3 sm:h-2/3"
+					alt="Equipo Logiciel AppLab"
+				/>
                 <ShinyButton className='mt-14 bg-[#000000]' onClick={handleClick}><p className='text-white'>Empezar ahora</p></ShinyButton>
 			</div>
       	</div>

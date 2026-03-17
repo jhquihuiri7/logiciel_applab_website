@@ -1,4 +1,5 @@
 "use client"
+import Image from "next/image";
 import React, {useState, useEffect } from "react";
 import Link from 'next/link';
 
@@ -47,7 +48,13 @@ const Navbar = () => {
                     href="/"
                     className="flex items-center gap-2"
                 >
-                    <img src="https://res.cloudinary.com/logicielapplab/image/upload/v1677460943/LogicielApplab/LOGO_NUEVO_LOGICIEL_125_efllcs.png" alt="logo" className="w-10 h-10 object-contain"/>
+                    <Image
+                      src="https://res.cloudinary.com/logicielapplab/image/upload/v1677460943/LogicielApplab/LOGO_NUEVO_LOGICIEL_125_efllcs.png"
+                      width={40}
+                      height={40}
+                      alt="logo"
+                      className="w-10 h-10 object-contain"
+                    />
                     <p className="text-black text-2xl font-bold cursor-pointer flex">
                         Logiciel Applab
                     </p>
@@ -60,8 +67,10 @@ const Navbar = () => {
                     ))}
                 </ul>
                 <div className={`${(isMobile && isLandscape) ? "flex" : "flex sm:hidden"} felx-1 justify-end items-center`}>
-                    <img
-                        src={toggle?"/close.svg":"/menu.svg"}
+                    <Image
+                        src={toggle ? "/close.svg" : "/menu.svg"}
+                        width={20}
+                        height={20}
                         alt="menu"
                         className="w-[20px] h-[20px] object-contain cursor-pointer"
                         onClick={()=>setToggle(!toggle)}

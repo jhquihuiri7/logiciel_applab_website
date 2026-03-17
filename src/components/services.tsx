@@ -1,5 +1,5 @@
-"use client"
 import React, { FunctionComponent, useState, useEffect } from "react";
+import Image from "next/image";
 
 const Card = ({
   img,
@@ -15,11 +15,14 @@ const Card = ({
   showNew:boolean;
 }) => {
     return (
-      <div className="card bg-base-100 w-full sm:w-[40%] mb-4 shadow-xl">
+        <div className="card bg-base-100 w-full sm:w-[40%] mb-4 shadow-xl">
         <figure>
-          <img
+          <Image
             src={img}
-            alt="Shoes"
+            alt={title}
+            width={640}
+            height={360}
+            className="h-[220px] w-full object-cover"
           />
         </figure>
         <div className="card-body">
