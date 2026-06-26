@@ -1,20 +1,23 @@
 ﻿import type { Metadata } from "next";
-import { JetBrains_Mono, Manrope, Space_Grotesk } from "next/font/google";
+import { JetBrains_Mono, Poppins, Source_Serif_4 } from "next/font/google";
 import "./globals.css";
 
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space-grotesk",
+const poppins = Poppins({
+  variable: "--font-poppins",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
 });
 
-const manrope = Manrope({
-  variable: "--font-manrope",
+const sourceSerif = Source_Serif_4({
+  variable: "--font-source-serif",
   subsets: ["latin"],
+  style: ["italic", "normal"],
 });
 
 const jetBrainsMono = JetBrains_Mono({
   variable: "--font-jetbrains-mono",
   subsets: ["latin"],
+  weight: ["400", "500"],
 });
 
 export const metadata: Metadata = {
@@ -38,7 +41,7 @@ export default function RootLayout({
   return (
     <html
       lang="es"
-      className={`${spaceGrotesk.variable} ${manrope.variable} ${jetBrainsMono.variable}`}
+      className={`${poppins.variable} ${sourceSerif.variable} ${jetBrainsMono.variable}`}
     >
       <body>{children}</body>
     </html>

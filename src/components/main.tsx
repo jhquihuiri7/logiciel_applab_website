@@ -1,19 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
-import {
-  AnimatePresence,
-  motion,
-  type HTMLMotionProps,
-  useReducedMotion,
-  useScroll,
-} from "motion/react";
-import React, { useMemo, useState } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 
-import { cn } from "@/lib/utils";
+import { createBackground, type BackgroundController } from "./applab-background";
+import styles from "./applab-3d.module.css";
 
-const CONTACT_URL =
+const WA_URL =
   "https://wa.me/593997613568?text=Hola%2C%20quiero%20crear%20una%20plataforma%20web%20de%20alto%20impacto%20con%20Logiciel%20AppLab";
 
 const NAV = [
@@ -24,8 +17,10 @@ const NAV = [
   { id: "contact", label: "Contacto" },
 ] as const;
 
+const HERO_CHIPS = ["Plataformas Web", "UX & Conversión", "SEO & Growth"] as const;
+
 const STATS = [
-  ["Lanzamiento promedio", "4-8 semanas"],
+  ["Lanzamiento promedio", "4–8 semanas"],
   ["Proyectos entregados", "+120"],
   ["Target de disponibilidad", "99.9%"],
   ["Core Web Vitals", "Optimizados"],
@@ -33,299 +28,559 @@ const STATS = [
 
 const SERVICES = [
   {
-    id: "platforms",
+    num: "Servicio 01",
     title: "Plataformas Web a Medida",
-    text: "Arquitectura frontend escalable, UX premium y codigo mantenible para crecimiento real.",
-    stack: ["Next.js", "TypeScript", "Tailwind", "SSR/SSG"],
+    sub: "Arquitectura & performance",
+    text: "Arquitectura frontend escalable, UX premium y código mantenible para crecimiento real. Construimos bases técnicas que aguantan tráfico, equipos y tiempo.",
+    tags: ["Next.js", "TypeScript", "Tailwind", "SSR/SSG"],
   },
   {
-    id: "conversion",
-    title: "UX y Conversion",
-    text: "Flujos centrados en negocio, storytelling visual y microinteracciones que elevan conversion.",
-    stack: ["UX Research", "Motion", "CRO", "Analytics"],
+    num: "Servicio 02",
+    title: "UX y Conversión",
+    sub: "Storytelling & CRO",
+    text: "Flujos centrados en negocio, storytelling visual y microinteracciones que elevan conversión. Cada pantalla empuja a la siguiente acción.",
+    tags: ["UX Research", "Motion", "CRO", "Analytics"],
   },
   {
-    id: "seo",
-    title: "SEO Tecnico y Growth",
-    text: "Base semantica y tecnica para captar trafico cualificado y sostener visibilidad organica.",
-    stack: ["Schema", "Search Console", "CWV", "Content Ops"],
+    num: "Servicio 03",
+    title: "SEO Técnico y Growth",
+    sub: "Visibilidad orgánica",
+    text: "Base semántica y técnica para captar tráfico cualificado y sostener visibilidad orgánica. Crecimiento medible, no humo.",
+    tags: ["Schema", "Search Console", "CWV", "Content Ops"],
   },
 ] as const;
 
 const STEPS = [
-  ["Discovery", "Objetivos, audiencia y roadmap tecnico."],
+  ["Discovery", "Objetivos, audiencia y roadmap técnico."],
   ["UX/UI", "Sistema visual y prototipado interactivo."],
-  ["Build", "Desarrollo modular con calidad de codigo."],
-  ["QA", "Validacion de rendimiento, accesibilidad y flujos."],
-  ["Launch", "Despliegue, medicion y mejora continua."],
-] as const;
-
-const CASES = [
-  {
-    id: "trading8",
-    name: "Trading 8",
-    sector: "Fintech",
-    challenge: "Reducir friccion en onboarding.",
-    outcome: "+42% en registros completados.",
-    gradient:
-      "linear-gradient(135deg, rgba(11,24,58,0.95) 0%, rgba(26,103,178,0.75) 50%, rgba(69,230,255,0.55) 100%)",
-  },
-  {
-    id: "earthquake",
-    name: "Earthquake Platform",
-    sector: "Data",
-    challenge: "Presentar informacion critica en tiempo real.",
-    outcome: "Mejor lectura operativa y menor tiempo de decision.",
-    gradient:
-      "linear-gradient(120deg, rgba(8,16,30,0.95) 0%, rgba(49,74,142,0.8) 50%, rgba(0,205,255,0.5) 100%)",
-  },
-  {
-    id: "portfolio",
-    name: "Portfolio Pro",
-    sector: "Creative",
-    challenge: "Convertir portafolio en canal de ventas.",
-    outcome: "+58% en leads calificados en 90 dias.",
-    gradient:
-      "linear-gradient(125deg, rgba(5,22,36,0.95) 0%, rgba(19,87,146,0.8) 45%, rgba(106,255,231,0.5) 100%)",
-  },
+  ["Build", "Desarrollo modular con calidad de código."],
+  ["QA", "Validación de rendimiento, accesibilidad y flujos."],
+  ["Launch", "Despliegue, medición y mejora continua."],
 ] as const;
 
 const TECH = [
-  ["Next.js", "Render hibrido para velocidad y SEO."],
+  ["Next.js", "Render híbrido para velocidad y SEO."],
   ["TypeScript", "Tipado estricto para confiabilidad."],
   ["Motion", "Transiciones y microinteracciones fluidas."],
   ["Cloud", "Despliegue preparado para escalar."],
-  ["Analytics", "Medicion orientada a negocio."],
+  ["Analytics", "Medición orientada a negocio."],
 ] as const;
 
-type RevealProps = HTMLMotionProps<"div"> & { delay?: number };
-function Reveal({ className, delay = 0, children, ...props }: RevealProps) {
-  const reduceMotion = useReducedMotion();
+const BAR_HEIGHTS = ["40%", "70%", "55%", "90%", "48%"] as const;
+
+const CASES = [
+  { name: "Trading 8", sector: "Fintech", desc: "Reducir fricción en onboarding." },
+  { name: "Earthquake Platform", sector: "Data", desc: "Información crítica en tiempo real." },
+  { name: "Portfolio Pro", sector: "Creative", desc: "Convertir portafolio en canal de ventas." },
+] as const;
+
+const HEATMAP: { o: number; glow?: boolean }[] = [
+  { o: 0.18 }, { o: 0.4 }, { o: 0.12 }, { o: 0.6 }, { o: 0.28 }, { o: 0.85, glow: true },
+  { o: 0.22 }, { o: 0.5 }, { o: 0.15 }, { o: 0.35 }, { o: 0.7 }, { o: 0.2 },
+];
+
+const DIR_PALETTES = [
+  { accent: "#5fe0ff", accent2: "#5fe0ff", glow: "rgba(95,224,255,.55)" },
+  { accent: "#7cf0ff", accent2: "#b6a4ff", glow: "rgba(150,130,255,.5)" },
+  { accent: "#e9f1ff", accent2: "#aebfd6", glow: "rgba(200,220,255,.42)" },
+] as const;
+
+const DIR_LABELS = ["Núcleo", "Constelación", "Aurora"] as const;
+
+function WaIcon({ size = 17 }: { size?: number }) {
   return (
-    <motion.div
-      className={className}
-      initial={reduceMotion ? { opacity: 1 } : { opacity: 0, y: 26 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.5, ease: "easeOut", delay }}
-      {...props}
-    >
-      {children}
-    </motion.div>
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2Zm5.5 14.2c-.2.6-1.2 1.2-1.7 1.2s-1.1.2-3.6-.8-4.1-3.6-4.2-3.8-1-1.3-1-2.5.6-1.7.9-2 .5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .6l-.4.5-.3.3c-.2.2-.3.4-.1.7s.8 1.3 1.7 2.1c1.1 1 2 1.3 2.3 1.4s.4.1.6-.1l.8-1c.2-.2.4-.2.6-.1l1.9.9c.2.1.4.2.5.3s.1.7-.1 1.2Z" />
+    </svg>
   );
 }
-
-function HeroVisual() {
-  const reduceMotion = useReducedMotion();
-  return (
-    <div className="orb-wrap relative mx-auto mt-10 flex aspect-square w-full max-w-[480px] items-center justify-center">
-      <div className="absolute inset-[16%] rounded-full bg-cyan-300/20 blur-3xl" />
-      <motion.div className="orb-ring" animate={reduceMotion ? undefined : { rotate: 360 }} transition={{ duration: 30, repeat: Infinity, ease: "linear" }} />
-      <motion.div className="orb-ring orb-ring-b" animate={reduceMotion ? undefined : { rotate: -360 }} transition={{ duration: 24, repeat: Infinity, ease: "linear" }} />
-      <motion.div className="orb-ring orb-ring-c" animate={reduceMotion ? undefined : { rotate: 360 }} transition={{ duration: 20, repeat: Infinity, ease: "linear" }} />
-      <div className="glass-panel relative flex h-[58%] w-[58%] flex-col justify-between p-6">
-        <span className="section-label w-fit">Live Build</span>
-        <div>
-          <p className="font-[var(--font-jetbrains-mono)] text-xs uppercase tracking-[0.2em] text-cyan-100">Core Stack</p>
-          <p className="mt-2 text-2xl font-semibold text-white">Next.js + Motion</p>
-        </div>
-        <div className="signal-line h-1 w-full rounded-full bg-white/10" />
-      </div>
-    </div>
-  );
-}
-
-type ServiceId = (typeof SERVICES)[number]["id"];
-type CaseId = (typeof CASES)[number]["id"];
 
 export default function Main() {
-  const reduceMotion = useReducedMotion();
-  const { scrollYProgress } = useScroll();
-  const [serviceId, setServiceId] = useState<ServiceId>(SERVICES[0].id);
-  const [caseId, setCaseId] = useState<CaseId>(CASES[0].id);
-  const [techIndex, setTechIndex] = useState(0);
+  const [dir, setDir] = useState(0);
+  const [svc, setSvc] = useState(0);
+  const [tech, setTech] = useState(0);
+  const [kase, setKase] = useState(0);
 
-  const activeService = useMemo(
-    () => SERVICES.find((item) => item.id === serviceId) ?? SERVICES[0],
-    [serviceId],
-  );
-  const activeCase = useMemo(() => CASES.find((item) => item.id === caseId) ?? CASES[0], [caseId]);
+  const rootRef = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const progRef = useRef<HTMLDivElement>(null);
+  const ctrlRef = useRef<BackgroundController | null>(null);
+
+  useEffect(() => {
+    if (!canvasRef.current || !rootRef.current) return;
+    const ctrl = createBackground(canvasRef.current, rootRef.current, progRef.current);
+    ctrlRef.current = ctrl;
+    return () => {
+      ctrl.dispose();
+      ctrlRef.current = null;
+    };
+  }, []);
+
+  useEffect(() => {
+    ctrlRef.current?.setMode(dir);
+  }, [dir]);
+
+  const palette = DIR_PALETTES[dir];
+  const rootStyle = {
+    "--accent": palette.accent,
+    "--accent2": palette.accent2,
+    "--glow": palette.glow,
+  } as CSSProperties;
+
+  const activeService = SERVICES[svc];
 
   return (
-    <div className="page-shell">
-      <motion.div className="fixed left-0 top-0 z-[90] h-[3px] w-full origin-left bg-gradient-to-r from-cyan-300 via-sky-400 to-cyan-200" style={{ scaleX: scrollYProgress }} />
+    <div ref={rootRef} className={styles.root} style={rootStyle}>
+      <canvas ref={canvasRef} className={styles.bgCanvas} />
+      <div className={styles.vignette} />
+      <div ref={progRef} className={styles.progress} />
 
-      <header className="fixed left-0 top-0 z-50 w-full border-b border-white/10 bg-[#070d1b]/70 backdrop-blur-xl">
-        <div className="layout-container flex h-20 items-center justify-between">
-          <Link href="#inicio" className="flex items-center gap-3">
-            <span className="flex h-10 w-10 items-center justify-center rounded-xl border border-cyan-200/35 bg-cyan-300/10 text-sm font-semibold text-cyan-100">LA</span>
-            <div>
-              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-white">Logiciel</p>
-              <p className="text-xs text-slate-300">Digital Engineering Studio</p>
-            </div>
-          </Link>
-          <nav className="hidden items-center gap-8 lg:flex">
+      {/* ===================== HEADER ===================== */}
+      <header className={styles.header}>
+        <div className={`${styles.headerInner} ${styles.glassEdge}`}>
+          <a href="#inicio" className={styles.brand}>
+            <span className={styles.brandMark}>LA</span>
+            <span className={styles.brandText}>
+              <span className={styles.brandName}>Logiciel</span>
+              <span className={styles.brandSub}>Digital Engineering Studio</span>
+            </span>
+          </a>
+          <nav className={styles.nav}>
             {NAV.map((item) => (
-              <Link key={item.id} href={`#${item.id}`} className="text-sm text-slate-300 transition hover:text-cyan-100">
+              <a key={item.id} href={`#${item.id}`} className={styles.navLink}>
                 {item.label}
-              </Link>
+              </a>
             ))}
           </nav>
-          <a href={CONTACT_URL} target="_blank" rel="noopener noreferrer" className="rounded-full border border-cyan-200/35 bg-cyan-300/15 px-5 py-2 text-sm font-semibold text-cyan-100 transition hover:bg-cyan-300/25">
+          <a href={WA_URL} target="_blank" rel="noopener" className={styles.cta}>
+            <span className={styles.ctaDot} />
             Iniciar proyecto
           </a>
         </div>
       </header>
 
-      <main>
-        <section id="inicio" className="section-shell pt-36">
-          <div className="layout-container grid items-center gap-14 lg:grid-cols-[1.05fr_1fr]">
-            <Reveal className="space-y-8">
-              <span className="section-label">Web Experiences de Alto Impacto</span>
-              <h1 className="max-w-2xl text-4xl leading-[1.03] text-white md:text-6xl">
-                Ingenieria web que convierte vision en <span className="text-gradient">producto digital premium</span>
+      <main className={styles.main}>
+        {/* ===================== HERO ===================== */}
+        <section id="inicio" className={styles.hero}>
+          <div className={styles.heroGrid}>
+            <div>
+              <span className={styles.badge}>
+                <span className={styles.badgeDot} />
+                Web Experiences de Alto Impacto
+              </span>
+              <h1 className={styles.h1}>
+                Ingeniería web que convierte visión en{" "}
+                <span className={styles.serif}>producto digital premium</span>
               </h1>
-              <p className="max-w-xl text-lg text-slate-300 md:text-xl">
-                Disenamos plataformas modernas con arquitectura solida, UX inmersiva y performance real para empresas que quieren destacar con tecnologia.
+              <p className={styles.lead}>
+                Diseñamos plataformas modernas con arquitectura sólida, UX inmersiva y performance
+                real para empresas que quieren destacar con tecnología.
               </p>
-              <div className="flex flex-wrap gap-4">
-                <Link href="#portfolio" className="rounded-full bg-white px-6 py-3 text-sm font-semibold text-slate-950 transition hover:bg-cyan-100">Explorar casos</Link>
-                <a href={CONTACT_URL} target="_blank" rel="noopener noreferrer" className="rounded-full border border-white/30 px-6 py-3 text-sm font-semibold text-white transition hover:border-cyan-200 hover:text-cyan-100">Agendar consultoria</a>
+              <div className={styles.heroCtas}>
+                <a href="#portfolio" className={`${styles.btnPrimary} ${styles.glassEdge}`}>
+                  Explorar casos
+                  <span className={styles.btnArrow}>
+                    <svg
+                      width="15"
+                      height="15"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.9"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      aria-hidden="true"
+                    >
+                      <path d="M5 12h14" />
+                      <path d="m13 5 7 7-7 7" />
+                    </svg>
+                  </span>
+                </a>
+                <a href={WA_URL} target="_blank" rel="noopener" className={styles.btnGhost}>
+                  Agendar consultoría
+                </a>
               </div>
-              <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-                {STATS.map(([label, value]) => (
-                  <div key={label} className="glass-panel p-4">
-                    <p className="font-[var(--font-jetbrains-mono)] text-[11px] uppercase tracking-[0.2em] text-cyan-200/75">{label}</p>
-                    <p className="mt-2 text-lg font-semibold text-white">{value}</p>
-                  </div>
+              <div className={styles.chips}>
+                {HERO_CHIPS.map((chip) => (
+                  <span key={chip} className={styles.chip}>
+                    {chip}
+                  </span>
                 ))}
               </div>
-            </Reveal>
-            <Reveal delay={0.08}><HeroVisual /></Reveal>
+            </div>
+
+            <div className={styles.heroVisual}>
+              <div className={styles.heroFloat}>
+                <div className={`${styles.floatCard} ${styles.glassEdge}`}>
+                  <span className={styles.liveBadge}>
+                    <span className={styles.liveDot} />
+                    Live Build
+                  </span>
+                  <p className={styles.cardLabel}>Core Stack</p>
+                  <p className={styles.cardStack}>Next.js + Motion</p>
+                  <div className={styles.cardBar}>
+                    <div className={styles.cardBarFill} />
+                  </div>
+                </div>
+                <div className={`${styles.floatPill} ${styles.floatPillTR}`}>99.9% uptime</div>
+                <div className={`${styles.floatPill} ${styles.floatPillBL}`}>TypeScript</div>
+              </div>
+            </div>
+          </div>
+
+          <div className={styles.statsGrid}>
+            {STATS.map(([label, value]) => (
+              <div key={label} className={styles.statCard}>
+                <p className={styles.statLabel}>{label}</p>
+                <p className={styles.statValue}>{value}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className={styles.scrollHint}>
+            <span className={styles.scrollDot} />
           </div>
         </section>
 
-        <section id="services" className="section-shell section-transition">
-          <div className="layout-container grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
-            <div className="space-y-3">
-              {SERVICES.map((service) => (
-                <button key={service.id} onClick={() => setServiceId(service.id)} className={cn("w-full rounded-2xl border px-5 py-4 text-left transition", service.id === activeService.id ? "border-cyan-200/40 bg-cyan-300/10" : "border-white/10 bg-white/5 hover:border-white/25")}>
-                  <p className="text-lg font-semibold text-white">{service.title}</p>
+        {/* ===================== SERVICES ===================== */}
+        <section id="services" className={styles.section}>
+          <div className={styles.headWrap}>
+            <span className={styles.kicker}>Qué hacemos</span>
+            <h2 className={styles.h2}>
+              Servicios de ingeniería con <span className={styles.serif}>enfoque en negocio</span>
+            </h2>
+          </div>
+          <div className={styles.splitGrid}>
+            <div className={styles.selectList}>
+              {SERVICES.map((service, i) => (
+                <button
+                  key={service.title}
+                  type="button"
+                  onClick={() => setSvc(i)}
+                  className={styles.selectBtn}
+                >
+                  {svc === i && <span className={styles.selectMarker} />}
+                  <span className={styles.selectTitle}>{service.title}</span>
+                  <span className={styles.selectSub}>{service.sub}</span>
                 </button>
               ))}
             </div>
-            <AnimatePresence mode="wait">
-              <motion.article key={activeService.id} initial={reduceMotion ? { opacity: 1 } : { opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} exit={reduceMotion ? { opacity: 1 } : { opacity: 0, y: -14 }} className="glass-panel p-8">
-                <p className="text-xl font-semibold text-white">{activeService.title}</p>
-                <p className="mt-3 text-slate-300">{activeService.text}</p>
-                <div className="mt-5 flex flex-wrap gap-2">
-                  {activeService.stack.map((item) => <span key={item} className="rounded-full border border-cyan-200/30 bg-cyan-300/10 px-3 py-1 text-xs text-cyan-50">{item}</span>)}
+            <div className={`${styles.detailPanel} ${styles.glassEdge}`}>
+              <div>
+                <p className={styles.panelNum}>{activeService.num}</p>
+                <p className={styles.panelTitle}>{activeService.title}</p>
+                <p className={styles.panelText}>{activeService.text}</p>
+                <div className={styles.tags}>
+                  {activeService.tags.map((t) => (
+                    <span key={t} className={styles.tag}>
+                      {t}
+                    </span>
+                  ))}
                 </div>
-              </motion.article>
-            </AnimatePresence>
-          </div>
-        </section>
-
-        <section id="process" className="section-shell">
-          <div className="layout-container">
-            <Reveal className="mb-10 max-w-3xl">
-              <span className="section-label">Proceso de Ingenieria</span>
-              <h2 className="mt-4 text-3xl text-white md:text-5xl">Metodologia precisa de estrategia a lanzamiento</h2>
-            </Reveal>
-            <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-5">
-              {STEPS.map(([title, text], idx) => (
-                <Reveal key={title} delay={idx * 0.05}>
-                  <article className="glass-panel h-full p-6">
-                    <p className="font-[var(--font-jetbrains-mono)] text-xs uppercase tracking-[0.2em] text-cyan-200/80">Step {String(idx + 1).padStart(2, "0")}</p>
-                    <h3 className="mt-3 text-xl font-semibold text-white">{title}</h3>
-                    <p className="mt-2 text-sm text-slate-300">{text}</p>
-                  </article>
-                </Reveal>
-              ))}
+              </div>
             </div>
           </div>
         </section>
 
-        <section id="stack" className="section-shell section-transition">
-          <div className="layout-container grid gap-8 lg:grid-cols-2">
-            <Reveal className="glass-panel p-7">
-              <span className="section-label">Technology Constellation</span>
-              <h2 className="mt-4 text-3xl text-white md:text-4xl">Visualizacion creativa de stack</h2>
-              <div className="mt-6 grid gap-3 sm:grid-cols-2">
-                {TECH.map(([name], idx) => (
-                  <button key={name} onMouseEnter={() => setTechIndex(idx)} onClick={() => setTechIndex(idx)} className={cn("rounded-2xl border p-4 text-left transition", idx === techIndex ? "border-cyan-200/40 bg-cyan-300/10" : "border-white/10 bg-black/20")}>
-                    <p className="font-semibold text-white">{name}</p>
+        {/* ===================== PROCESS ===================== */}
+        <section id="process" className={styles.section}>
+          <div className={styles.headWrapWide}>
+            <span className={styles.kicker}>Proceso de Ingeniería</span>
+            <h2 className={styles.h2}>
+              Metodología precisa de{" "}
+              <span className={styles.serif}>estrategia a lanzamiento</span>
+            </h2>
+          </div>
+          <div className={styles.steps}>
+            {STEPS.map(([title, text], i) => (
+              <div key={title} className={styles.step}>
+                <p className={styles.stepNum}>Step {String(i + 1).padStart(2, "0")}</p>
+                <h3 className={styles.stepTitle}>{title}</h3>
+                <p className={styles.stepText}>{text}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* ===================== STACK ===================== */}
+        <section id="stack" className={styles.section}>
+          <div className={styles.stackGrid}>
+            <div className={styles.stackLeft}>
+              <span className={styles.kicker}>Technology Constellation</span>
+              <h2 className={styles.stackH2}>
+                El stack que mueve cada <span className={styles.serif}>lanzamiento</span>
+              </h2>
+              <div className={styles.techGrid}>
+                {TECH.map(([name], i) => (
+                  <button
+                    key={name}
+                    type="button"
+                    onClick={() => setTech(i)}
+                    className={styles.techBtn}
+                  >
+                    {tech === i && <span className={styles.techRing} />}
+                    <span className={styles.techBtnLabel}>{name}</span>
                   </button>
                 ))}
               </div>
-            </Reveal>
-            <Reveal className="glass-panel p-7">
-              <p className="font-[var(--font-jetbrains-mono)] text-xs uppercase tracking-[0.2em] text-cyan-100">Nodo activo</p>
-              <p className="mt-4 text-3xl font-semibold text-white">{TECH[techIndex][0]}</p>
-              <p className="mt-3 text-slate-300">{TECH[techIndex][1]}</p>
-            </Reveal>
+            </div>
+            <div className={`${styles.stackPanel} ${styles.glassEdge}`}>
+              <p className={styles.nodeLabel}>Nodo activo</p>
+              <p className={styles.techName}>{TECH[tech][0]}</p>
+              <p className={styles.techDesc}>{TECH[tech][1]}</p>
+              <div className={styles.bars}>
+                {BAR_HEIGHTS.map((height, i) => (
+                  <span
+                    key={i}
+                    className={styles.bar}
+                    style={{ height, animationDelay: `${i * 0.2}s` }}
+                  />
+                ))}
+              </div>
+            </div>
           </div>
         </section>
 
-        <section id="portfolio" className="section-shell">
-          <div className="layout-container grid gap-8 lg:grid-cols-[0.85fr_1.15fr]">
-            <div className="space-y-3">
-              {CASES.map((item) => (
-                <button key={item.id} onClick={() => setCaseId(item.id)} className={cn("w-full rounded-2xl border p-5 text-left transition", item.id === activeCase.id ? "border-cyan-200/45 bg-cyan-300/10" : "border-white/10 bg-white/5 hover:border-white/25")}>
-                  <p className="text-lg font-semibold text-white">{item.name}</p>
-                  <p className="mt-1 text-sm text-cyan-100/85">{item.sector}</p>
-                  <p className="mt-2 text-sm text-slate-300">{item.challenge}</p>
+        {/* ===================== PORTFOLIO ===================== */}
+        <section id="portfolio" className={styles.section}>
+          <div className={styles.headWrap}>
+            <span className={styles.kicker}>Casos</span>
+            <h2 className={styles.h2}>
+              Resultados que <span className={styles.serif}>se miden</span>
+            </h2>
+          </div>
+          <div className={styles.caseSplit}>
+            <div className={styles.selectList}>
+              {CASES.map((c, i) => (
+                <button
+                  key={c.name}
+                  type="button"
+                  onClick={() => setKase(i)}
+                  className={styles.selectBtn}
+                >
+                  {kase === i && <span className={styles.selectMarker} />}
+                  <span className={styles.selectTitle}>{c.name}</span>
+                  <span className={styles.selectSector}>{c.sector}</span>
+                  <span className={styles.selectDesc}>{c.desc}</span>
                 </button>
               ))}
             </div>
-            <AnimatePresence mode="wait">
-              <motion.article key={activeCase.id} initial={reduceMotion ? { opacity: 1 } : { opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} exit={reduceMotion ? { opacity: 1 } : { opacity: 0, y: -14 }} className="glass-panel overflow-hidden">
-                <div className="relative min-h-[340px] p-8" style={{ background: activeCase.gradient }}>
-                  <p className="font-[var(--font-jetbrains-mono)] text-xs uppercase tracking-[0.2em] text-cyan-50">{activeCase.sector}</p>
-                  <p className="mt-2 text-3xl font-semibold text-white">{activeCase.name}</p>
-                  <div className="relative mt-8 overflow-hidden rounded-2xl border border-white/25">
-                    <Image src="/images/nosotros.png" alt={`Preview ${activeCase.name}`} width={1100} height={700} className="h-[190px] w-full object-cover opacity-85" />
+            <div className={`${styles.casePanel} ${styles.glassEdge}`}>
+              {kase === 0 && (
+                <div>
+                  <p className={styles.caseKicker}>Fintech</p>
+                  <p className={styles.caseName}>Trading 8</p>
+                  <div className={styles.caseWidget}>
+                    <div className={styles.caseRow}>
+                      <div>
+                        <p className={styles.miniLabel}>Balance total</p>
+                        <p className={styles.miniBalance}>$ 184,920</p>
+                      </div>
+                      <span className={styles.posPill}>+ 42%</span>
+                    </div>
+                    <svg
+                      viewBox="0 0 320 90"
+                      width="100%"
+                      height="90"
+                      style={{ marginTop: 18, display: "block" }}
+                      aria-hidden="true"
+                    >
+                      <defs>
+                        <linearGradient id="trading8grad" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="0" stopColor="var(--accent)" stopOpacity=".4" />
+                          <stop offset="1" stopColor="var(--accent)" stopOpacity="0" />
+                        </linearGradient>
+                      </defs>
+                      <path
+                        d="M0 70 L40 60 L80 64 L120 44 L160 50 L200 30 L240 36 L280 16 L320 22 L320 90 L0 90 Z"
+                        fill="url(#trading8grad)"
+                      />
+                      <path
+                        d="M0 70 L40 60 L80 64 L120 44 L160 50 L200 30 L240 36 L280 16 L320 22"
+                        fill="none"
+                        stroke="var(--accent)"
+                        strokeWidth="2.2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                    <div className={styles.metricRow}>
+                      <span className={styles.metric}>
+                        Onboarding
+                        <br />
+                        <b>1.8 min</b>
+                      </span>
+                      <span className={styles.metric}>
+                        Drop-off
+                        <br />
+                        <b>-31%</b>
+                      </span>
+                    </div>
+                  </div>
+                  <div className={styles.resultBlock}>
+                    <p className={styles.resultLabel}>Resultado</p>
+                    <p className={styles.resultText}>+42% en registros completados.</p>
                   </div>
                 </div>
-                <div className="p-8">
-                  <p className="text-xs uppercase tracking-[0.16em] text-cyan-100">Resultado</p>
-                  <p className="mt-2 text-slate-200">{activeCase.outcome}</p>
+              )}
+
+              {kase === 1 && (
+                <div>
+                  <p className={styles.caseKicker}>Data</p>
+                  <p className={styles.caseName}>Earthquake Platform</p>
+                  <div className={styles.caseWidget}>
+                    <div className={styles.caseRowCenter}>
+                      <p className={styles.caseTitle}>Actividad sísmica · live</p>
+                      <span className={styles.liveTag}>
+                        <span className={styles.liveTagDot} />
+                        Tiempo real
+                      </span>
+                    </div>
+                    <div className={styles.heatmap}>
+                      {HEATMAP.map((cell, i) => (
+                        <span
+                          key={i}
+                          className={styles.heatCell}
+                          style={{
+                            background: `rgba(120,225,255,${cell.o})`,
+                            boxShadow: cell.glow ? "0 0 12px var(--glow)" : undefined,
+                          }}
+                        />
+                      ))}
+                    </div>
+                    <div className={styles.metricRow}>
+                      <span className={styles.metric}>
+                        Eventos/min
+                        <br />
+                        <b>2,140</b>
+                      </span>
+                      <span className={styles.metric}>
+                        Latencia
+                        <br />
+                        <b>120 ms</b>
+                      </span>
+                    </div>
+                  </div>
+                  <div className={styles.resultBlock}>
+                    <p className={styles.resultLabel}>Resultado</p>
+                    <p className={styles.resultText}>
+                      Mejor lectura operativa y menor tiempo de decisión.
+                    </p>
+                  </div>
                 </div>
-              </motion.article>
-            </AnimatePresence>
+              )}
+
+              {kase === 2 && (
+                <div>
+                  <p className={styles.caseKicker}>Creative</p>
+                  <p className={styles.caseName}>Portfolio Pro</p>
+                  <div className={styles.caseImageWrap}>
+                    <Image
+                      src="/images/nosotros.png"
+                      alt="Portfolio Pro preview"
+                      width={1100}
+                      height={700}
+                      className={styles.caseImage}
+                    />
+                  </div>
+                  <div className={styles.resultBlock}>
+                    <p className={styles.resultLabel}>Resultado</p>
+                    <p className={styles.resultText}>+58% en leads calificados en 90 días.</p>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         </section>
 
-        <section id="contact" className="section-shell pb-28 section-transition">
-          <div className="layout-container">
-            <Reveal className="glass-panel p-8 md:p-14">
-              <span className="section-label">Let&apos;s Build</span>
-              <h2 className="mt-4 max-w-3xl text-3xl text-white md:text-5xl">Convierte tu web en una experiencia que demuestre capacidad tecnica desde el primer segundo</h2>
-              <div className="mt-8 flex flex-wrap gap-4">
-                <a href={CONTACT_URL} target="_blank" rel="noopener noreferrer" className="rounded-full bg-cyan-300 px-7 py-3 text-sm font-semibold text-slate-950 transition hover:bg-cyan-200">Hablar por WhatsApp</a>
-                <a href="mailto:contacto@logicielapplab.com" className="rounded-full border border-white/25 px-7 py-3 text-sm font-semibold text-white transition hover:border-cyan-200 hover:text-cyan-100">contacto@logicielapplab.com</a>
-              </div>
-            </Reveal>
+        {/* ===================== CONTACT ===================== */}
+        <section id="contact" className={styles.contact}>
+          <div className={`${styles.contactCard} ${styles.glassEdge}`}>
+            <span className={styles.kicker}>Let&apos;s Build</span>
+            <h2 className={styles.contactH2}>
+              Convierte tu web en una experiencia que demuestre{" "}
+              <span className={styles.serif}>capacidad técnica</span> desde el primer segundo
+            </h2>
+            <div className={styles.contactBtns}>
+              <a href={WA_URL} target="_blank" rel="noopener" className={styles.btnWa}>
+                <WaIcon />
+                Hablar por WhatsApp
+              </a>
+              <a href="mailto:contacto@logicielapplab.com" className={styles.btnEmail}>
+                contacto@logicielapplab.com
+              </a>
+            </div>
           </div>
         </section>
       </main>
 
-      <footer className="border-t border-white/10 bg-black/30 py-10">
-        <div className="layout-container flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+      {/* ===================== FOOTER ===================== */}
+      <footer className={styles.footer}>
+        <div className={styles.footerInner}>
           <div>
-            <p className="text-lg font-semibold text-white">Logiciel AppLab</p>
-            <p className="mt-1 max-w-lg text-sm text-slate-300">Estudio digital enfocado en ingenieria web, UX avanzada y crecimiento sostenible.</p>
+            <p className={styles.footerBrand}>Logiciel AppLab</p>
+            <p className={styles.footerDesc}>
+              Estudio digital enfocado en ingeniería web, UX avanzada y crecimiento sostenible.
+            </p>
           </div>
-          <div className="flex gap-4 text-sm text-slate-300">
-            <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" className="transition hover:text-cyan-100">Instagram</a>
-            <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" className="transition hover:text-cyan-100">Facebook</a>
-            <a href={CONTACT_URL} target="_blank" rel="noopener noreferrer" className="transition hover:text-cyan-100">WhatsApp</a>
+          <div className={styles.socials}>
+            <a
+              href="https://www.instagram.com"
+              target="_blank"
+              rel="noopener"
+              className={styles.socialLink}
+              aria-label="Instagram"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden="true">
+                <rect x="3" y="3" width="18" height="18" rx="5" />
+                <circle cx="12" cy="12" r="4" />
+                <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+              </svg>
+            </a>
+            <a
+              href="https://www.facebook.com"
+              target="_blank"
+              rel="noopener"
+              className={styles.socialLink}
+              aria-label="Facebook"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M14 9h2.5l.5-3H14V4.5c0-.9.3-1.5 1.6-1.5H17V.3C16.7.3 15.7.2 14.6.2 12.2.2 10.6 1.7 10.6 4.3V6H8v3h2.6v8H14V9Z" />
+              </svg>
+            </a>
+            <a
+              href={WA_URL}
+              target="_blank"
+              rel="noopener"
+              className={styles.socialLink}
+              aria-label="WhatsApp"
+            >
+              <WaIcon size={18} />
+            </a>
           </div>
         </div>
-        <div className="layout-container mt-7 border-t border-white/10 pt-6 text-xs text-slate-400">(c) 2021 - {new Date().getFullYear()} Logiciel AppLab. Ingenieria digital con foco en resultados.</div>
+        <div className={styles.footerBottomWrap}>
+          <div className={styles.footerBottom}>
+            © 2021 – 2026 Logiciel AppLab. Ingeniería digital con foco en resultados.
+          </div>
+        </div>
       </footer>
 
-      <a href={CONTACT_URL} target="_blank" rel="noopener noreferrer" className="fixed bottom-6 right-6 z-50 rounded-full border border-cyan-200/40 bg-cyan-300/20 px-5 py-3 text-sm font-semibold text-cyan-50 backdrop-blur transition hover:bg-cyan-300/35">Escribenos</a>
+      {/* ===================== DIRECTION SWITCHER ===================== */}
+      <div className={styles.switcher}>
+        <span className={styles.switcherLabel}>Dirección</span>
+        {DIR_LABELS.map((label, i) => (
+          <button key={label} type="button" onClick={() => setDir(i)} className={styles.dirBtn}>
+            {dir === i && <span className={styles.dirGlow} />}
+            <span className={styles.dirLabel}>{label}</span>
+          </button>
+        ))}
+      </div>
+
+      <a href={WA_URL} target="_blank" rel="noopener" className={styles.floatWa}>
+        <WaIcon />
+        <span>Escríbenos</span>
+      </a>
     </div>
   );
 }
