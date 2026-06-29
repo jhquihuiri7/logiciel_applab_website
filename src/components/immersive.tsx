@@ -77,9 +77,9 @@ const HEATMAP: { o: number; glow?: boolean }[] = [
 ];
 
 const DIR_PALETTES = [
-  { accent: "#5fe0ff", accent2: "#1fb6ff", glow: "rgba(95,224,255,.55)" },
-  { accent: "#74d8ff", accent2: "#4f9bff", glow: "rgba(96,170,255,.5)" },
-  { accent: "#bfe8ff", accent2: "#7fe9ff", glow: "rgba(180,230,255,.46)" },
+  { accent: "#c16bff", accent2: "#9e06e4", glow: "rgba(193,107,255,.55)" },
+  { accent: "#9f7bff", accent2: "#6a2be0", glow: "rgba(140,100,255,.5)" },
+  { accent: "#e7a6ff", accent2: "#c949ce", glow: "rgba(220,150,255,.48)" },
 ] as const;
 
 const DIR_LABELS = ["Núcleo", "Constelación", "Aurora"] as const;
@@ -386,26 +386,14 @@ export default function Immersive() {
           <div className={styles.introRing}>
             <div className={styles.introRingA} />
             <div className={styles.introRingB} />
-            <svg width="60" height="60" viewBox="0 0 60 60" fill="none" aria-hidden="true">
-              <polygon
-                points="30,4 52,17 52,43 30,56 8,43 8,17"
-                stroke="var(--accent)"
-                strokeWidth="1.6"
-                strokeLinejoin="round"
-                className={styles.introHex}
-              />
-              <text
-                x="30"
-                y="38"
-                textAnchor="middle"
-                fontFamily="var(--font-poppins), sans-serif"
-                fontSize="20"
-                fontWeight="700"
-                fill="#fff"
-              >
-                LA
-              </text>
-            </svg>
+            <Image
+              src="/images/logo.png"
+              alt="Logiciel AppLab"
+              width={64}
+              height={64}
+              priority
+              className={styles.introLogo}
+            />
           </div>
           <div style={{ textAlign: "center" }}>
             <p className={styles.introWordmark}>Logiciel</p>
@@ -470,7 +458,13 @@ export default function Immersive() {
             }}
             className={styles.brand}
           >
-            <span className={styles.brandMark}>LA</span>
+            <Image
+              src="/images/logo.png"
+              alt="Logiciel AppLab"
+              width={40}
+              height={40}
+              className={styles.brandLogo}
+            />
             <span className={styles.brandText}>
               <span className={styles.brandName}>Logiciel</span>
               <span className={styles.brandSub}>Software Engineering Studio</span>
@@ -817,7 +811,7 @@ export default function Immersive() {
                             key={i}
                             className={styles.heatCell}
                             style={{
-                              background: `rgba(120,225,255,${cell.o})`,
+                              background: `rgba(186,120,255,${cell.o})`,
                               boxShadow: cell.glow ? "0 0 12px var(--glow)" : undefined,
                             }}
                           />

@@ -1,9 +1,15 @@
 ﻿import type { Metadata } from "next";
-import { JetBrains_Mono, Poppins, Source_Serif_4 } from "next/font/google";
+import { JetBrains_Mono, Poppins, Source_Serif_4, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 
 const poppins = Poppins({
   variable: "--font-poppins",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+});
+
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-space-grotesk",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
 });
@@ -41,7 +47,7 @@ export default function RootLayout({
   return (
     <html
       lang="es"
-      className={`${poppins.variable} ${sourceSerif.variable} ${jetBrainsMono.variable}`}
+      className={`${poppins.variable} ${spaceGrotesk.variable} ${sourceSerif.variable} ${jetBrainsMono.variable}`}
     >
       <body>{children}</body>
     </html>

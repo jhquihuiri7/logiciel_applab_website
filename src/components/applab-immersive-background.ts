@@ -40,9 +40,9 @@ interface Palette {
 }
 
 const PALETTES: Palette[] = [
-  { star: 0x49d4ff, a: 0x7fe9ff, b: 0x1fb6ff, light: 0x88ccff, emissive: 0x0a3a55 },
-  { star: 0x6fb6ff, a: 0x66e8ff, b: 0x4f9bff, light: 0x8fb8ff, emissive: 0x12305a },
-  { star: 0xbfe4ff, a: 0xeaf6ff, b: 0x9fe4ff, light: 0xdff0ff, emissive: 0x274055 },
+  { star: 0x9e06e4, a: 0xc16bff, b: 0x9e06e4, light: 0xd9a6ff, emissive: 0x2a0a4d },
+  { star: 0x7c5cff, a: 0x9e7bff, b: 0x6a2be0, light: 0x9f8fff, emissive: 0x1a1c58 },
+  { star: 0xd9a6ff, a: 0xf0d4ff, b: 0xd96bdf, light: 0xf6e6ff, emissive: 0x3a1640 },
 ];
 
 export function createImmersiveBackground(
@@ -84,10 +84,10 @@ export function createImmersiveBackground(
   camera.position.set(0, 0, 6.4);
 
   scene.add(new THREE.AmbientLight(0xffffff, 0.55));
-  const pl = new THREE.PointLight(0x88ccff, 2.4, 60);
+  const pl = new THREE.PointLight(0xb98bff, 2.4, 60);
   pl.position.set(5, 6, 6);
   scene.add(pl);
-  const pl2 = new THREE.PointLight(0x3a66ff, 1.1, 60);
+  const pl2 = new THREE.PointLight(0x6a2be0, 1.1, 60);
   pl2.position.set(-6, -4, 2);
   scene.add(pl2);
 
@@ -105,7 +105,7 @@ export function createImmersiveBackground(
   const sg = new THREE.BufferGeometry();
   sg.setAttribute("position", new THREE.BufferAttribute(sp, 3));
   const starMat = new THREE.PointsMaterial({
-    color: 0x49d4ff,
+    color: 0x9e06e4,
     size: 0.07,
     transparent: true,
     opacity: 0.7,
@@ -133,7 +133,7 @@ export function createImmersiveBackground(
   const ig = new THREE.BufferGeometry();
   ig.setAttribute("position", new THREE.BufferAttribute(ip, 3));
   const iMat = new THREE.PointsMaterial({
-    color: 0x7fe9ff,
+    color: 0xc16bff,
     size: 0.055,
     transparent: true,
     opacity: 0.85,
@@ -148,11 +148,11 @@ export function createImmersiveBackground(
   const coreGroup = new THREE.Group();
   coreGroup.position.x = 1.35;
   const ico = new THREE.IcosahedronGeometry(1.65, 1);
-  const wireMat = new THREE.LineBasicMaterial({ color: 0x7fe9ff, transparent: true, opacity: 0.5 });
+  const wireMat = new THREE.LineBasicMaterial({ color: 0xc16bff, transparent: true, opacity: 0.5 });
   coreGroup.add(new THREE.LineSegments(new THREE.WireframeGeometry(ico), wireMat));
   const innerMat = new THREE.MeshStandardMaterial({
-    color: 0x1fb6ff,
-    emissive: 0x1fb6ff,
+    color: 0x9e06e4,
+    emissive: 0x9e06e4,
     emissiveIntensity: 0.5,
     metalness: 0.7,
     roughness: 0.18,
@@ -161,8 +161,8 @@ export function createImmersiveBackground(
   const innerMesh = new THREE.Mesh(new THREE.IcosahedronGeometry(0.98, 0), innerMat);
   coreGroup.add(innerMesh);
   const shardMat = new THREE.MeshStandardMaterial({
-    color: 0xbfeaff,
-    emissive: 0x66ddff,
+    color: 0xe7c6ff,
+    emissive: 0xc16bff,
     emissiveIntensity: 0.5,
     metalness: 0.6,
     roughness: 0.3,
@@ -198,7 +198,7 @@ export function createImmersiveBackground(
   const ng = new THREE.BufferGeometry();
   ng.setAttribute("position", new THREE.BufferAttribute(np, 3));
   const nodeMat = new THREE.PointsMaterial({
-    color: 0x66e8ff,
+    color: 0xc16bff,
     size: 0.15,
     transparent: true,
     opacity: 0.95,
@@ -221,7 +221,7 @@ export function createImmersiveBackground(
   }
   const lg = new THREE.BufferGeometry();
   lg.setAttribute("position", new THREE.BufferAttribute(new Float32Array(segs), 3));
-  const lineMat = new THREE.LineBasicMaterial({ color: 0x8fb8ff, transparent: true, opacity: 0.26 });
+  const lineMat = new THREE.LineBasicMaterial({ color: 0xb98bff, transparent: true, opacity: 0.26 });
   constGroup.add(new THREE.LineSegments(lg, lineMat));
   scene.add(constGroup);
 
@@ -229,8 +229,8 @@ export function createImmersiveBackground(
   const ageo = new THREE.IcosahedronGeometry(1.85, 4);
   const auroraOrig = (ageo.attributes.position.array as Float32Array).slice(0);
   const auroraMat = new THREE.MeshStandardMaterial({
-    color: 0xeaf6ff,
-    emissive: 0x274055,
+    color: 0xf3e6ff,
+    emissive: 0x3a1640,
     emissiveIntensity: 0.28,
     metalness: 0.4,
     roughness: 0.22,
