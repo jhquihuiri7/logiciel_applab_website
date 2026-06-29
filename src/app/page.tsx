@@ -1,5 +1,5 @@
-import Main from "../components/main";
+import Immersive from "../components/immersive";
 
 export default function Home() {
-  return <Main />;
+  return <Immersive />;
 }
