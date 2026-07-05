@@ -35,6 +35,10 @@
     @apply min-h-full;
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
     margin: 0;
     font-family: var(--font-poppins), system-ui, sans-serif;
@@ -259,6 +263,25 @@
   60%,
   100% {
     transform: translateX(220%);
+  }
+}
+
+/* ===== Logiciel AppLab Odisea design animations ===== */
+@keyframes marqL {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes marqR {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
   }
 }
 

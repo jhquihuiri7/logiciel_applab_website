@@ -1,5 +1,5 @@
-import Immersive from "../components/immersive";
+import Odisea from "../components/odisea";
 
 export default function Home() {
-  return <Immersive />;
+  return <Odisea />;
 }
